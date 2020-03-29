@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/jlenon7/dedSec/issues"
   },
-  "homepage": "https://github.com/jlenon7/dedSec#readme"
+  "homepage": "https://github.com/jlenon7/dedSec#readme",
+  "dependencies": {}
 }
