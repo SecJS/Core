@@ -1,8 +1,8 @@
 {
-  "name": "dedsec",
-  "version": "1.0.0",
+  "name": "@jlenon7/dedsec",
+  "version": "1.0.1",
   "description": "",
-  "main": "src/index.js",
+  "main": "src/CrudMethodsController.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

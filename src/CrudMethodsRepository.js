@@ -1,19 +1,22 @@
 class CrudMethodsRepository {
-  async index(Entity) {
+  async index(E) {
+    const Entity = use(`App/Models/${E}`);
     const models = await Entity.all();
 
     return models;
   }
 
-  async store(body, Entity) {
+  async store(body, E) {
+    const Entity = use(`App/Models/${E}`);
     const model = await Entity.create({
-      body
+      body,
     });
 
     return model;
   }
-  
-  async show({ id }, Entity) {
+
+  async show({ id }, E) {
+    const Entity = use(`App/Models/${E}`);
     const model = await Entity.findBy({
       id,
     });
@@ -21,7 +24,8 @@ class CrudMethodsRepository {
     return model;
   }
 
-  async destroy(id, Entity) {
+  async destroy(id, E) {
+    const Entity = use(`App/Models/${E}`);
     const model = await Entity.findBy({
       id,
     });
