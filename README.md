@@ -25,7 +25,6 @@
   <a href="#-technology">🚀 Technology</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-project">💻 Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-tutorial">⏭ Tutorial</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-examples">⏯️ Examples</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-how-to-contribute">🤔 How to contribute</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-license">📝 License</a>
 </p>
@@ -42,20 +41,42 @@ The most fast development of NodeJS API'S with dedSec lib!
 
 ## ⏭ Tutorial
 
-### Install 
+<h3 align="center">
+  <strong>Install</strong>
+</h3>
 
 ```js
 npm install @jlenon7/dedSec / yarn add @jlenon7/dedSec
 ```
 
----
+<h3 align="center">
+  <strong>TestController</strong>
+</h3>
 
-## ⏯️ Examples
+```js
+const CrudMethodsController = use('@jlenon7/dedSec');
 
-You can find the **documentation** and more **examples** on how to use this lib here;
+class TestController extends CrudMethodsController {
+  constructor() {
+    super();
+    this.entity = 'Test';
+  }
+}
 
-- [Documentation](https://github.com/jlenon7/dedSec/wiki/)
-- [Examples](https://github.com/jlenon7/dedSec/tree/master/example)
+module.exports = TestController;
+```
+
+<h3 align="center">
+  <strong>Routes</strong>
+</h3>
+
+```js
+Route.get('/tests', 'TestController.index');
+Route.post('/tests', 'TestController.store');
+Route.get('/tests/:id', 'TestController.show');
+Route.put('/tests/:id', 'TestController.update');
+Route.delete('/tests/:id', 'TestController.destroy');
+```
 
 ---
 
