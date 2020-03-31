@@ -23,10 +23,14 @@ class CrudMethodsService {
     return model;
   }
 
-  async destroy({ id }, entity) {
-    const model = await this.crudMethodsRepository.destroy(id, entity);
+  async update({ id }, body, entity) {
+    const model = await this.crudMethodsRepository.update(id, body, entity);
 
     return model;
+  }
+
+  async destroy({ id }, entity) {
+    this.crudMethodsRepository.destroy(id, entity);
   }
 }
 
