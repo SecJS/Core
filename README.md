@@ -24,7 +24,7 @@
 <p align="center">
   <a href="#-technology">🚀 Technology</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-project">💻 Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-tutorial">⏭ Tutorial</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-quick-example">⏭ Quick Example</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-how-to-contribute">🤔 How to contribute</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-license">📝 License</a>
 </p>
@@ -42,7 +42,7 @@ The most fast development of NodeJS API'S with dedSec lib!
 ## ⏭ Tutorial
 
 <h3 align="center">
-  <strong>Install</strong>
+  <strong>Quick Example</strong>
 </h3>
 
 ```js
