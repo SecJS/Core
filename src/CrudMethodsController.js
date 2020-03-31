@@ -8,31 +8,31 @@ class CrudMethodsController {
     async index({ params, request, response }) {
       const models = await this.crudMethodsService.index(this.entity);
   
-      return response.status(200).json(models);
+      return response.status(200).json({msg: `all-${this.entity}-found`, type: `All ${this.entity} found`, models});
     }
   
     async store({ params, request, response }) {
       const model = await this.crudMethodsService.store(request.all(), this.entity);
   
-      return response.status(200).json(model);
+      return response.status(200).json({msg: `${this.entity}-stored`, type: `${this.entity} stored`, model});
     }
   
     async show({ params, request, response }) {
       const model = await this.crudMethodsService.show(params, this.entity);
   
-      return response.status(200).json(model);
+      return response.status(200).json({msg: `${this.entity}-founded`, type: `${this.entity} founded`, model});
     }
   
     async update({ params, request, response }) {
       const model = await this.crudMethodsService.update(params, request.all(), this.entity);
   
-      return response.status(200).json(model);
+      return response.status(200).json({msg: `${this.entity}-updated`, type: `${this.entity} updated`, model});
     }
   
     async destroy({ params, request, response }) {
-        await this.crudMethodsService.delete(params, this.entity);
+        this.crudMethodsService.destroy(params, this.entity);
 
-        return response.status(204);
+        return;
     }
   }
   
