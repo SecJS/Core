@@ -2,7 +2,7 @@
   "name": "@jlenon7/dedsec",
   "version": "1.0.2",
   "description": "",
-  "main": "src/CrudMethodsController.js",
+  "main": "src/*",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
