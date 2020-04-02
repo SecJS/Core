@@ -1,6 +1,11 @@
 import { Request, Response } from 'express'
 
-export default class CrudMethodsController {
+interface I
+
+export default abstract class AbstractCrudMethodsController {
+  protected service: TestService
+  protected repository: TestRepository
+
   protected async index (request: Request, response: Response) {
     const models = this.service.index()
 
