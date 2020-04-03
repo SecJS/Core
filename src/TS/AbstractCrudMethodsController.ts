@@ -1,32 +1,26 @@
-import { Request, Response } from 'express'
+import {IRepository, IServices} from "./Interfaces";
 
-interface I
 
-export default abstract class AbstractCrudMethodsController {
-  protected service: TestService
-  protected repository: TestRepository
+export default abstract class AbstractCrudMethodsController<Model> {
+    protected constructor(protected service: IServices<Model>, protected repository: IRepository<Model>) {}
 
-  protected async index (request: Request, response: Response) {
-    const models = this.service.index()
+    public async index(request, response) {
+        const models = await this.repository.all()
 
-    return response.json({ type: 'index', msg: 'Index Model', obj: {
-      models
-    }})
+        return response.json({
+            type: 'index', msg: 'Index Model', obj: {
+                models
+            }
+        })
+    }
+
+    public async store(request, response) {
+      const models = await this.service.store(request.all())
+
+      return response.json({
+          type: 'index', msg: 'Index Model', obj: {
+              models
+          }
+      })
   }
-
-  // protected async store (request: Request, response: Response) {
-  //   const model = this.service.store(request.all())
-
-  //   return response.json({ type: 'store', msg: 'Store Model', obj: {
-  //     model
-  //   }})
-  // }
-
-  // protected async show (request: Request, response: Response) {
-  //   const model = this.service.show(request.params.id)
-
-  //   return response.json({ type: 'show', msg: 'Show Model', obj: {
-  //     model
-  //   }})
-  // }
 }
