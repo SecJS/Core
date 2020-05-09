@@ -1,4 +1,4 @@
-export interface IMakeResponse<TData = any> {
+export interface ISecResponse<TData = any> {
   status?: 'success' | 'error'
   message?: string
   data?: TData[] | TData | object

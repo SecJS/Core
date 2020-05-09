@@ -1,10 +1,10 @@
-import { IMakeResponse } from './types'
+import { ISecResponse } from './types'
 
-export class MakeResponse {
+export class SecResponse {
   withCollection<TData = any>(
     dataObj: Array<TData>,
     message?: string,
-  ): IMakeResponse<TData> {
+  ): ISecResponse<TData> {
     return {
       status: 'success',
       message,
@@ -15,7 +15,7 @@ export class MakeResponse {
   withOne<TData = object>(
     dataObj: object,
     message?: string,
-  ): IMakeResponse<TData> {
+  ): ISecResponse<TData> {
     return {
       status: 'success',
       message,
@@ -23,7 +23,7 @@ export class MakeResponse {
     }
   }
 
-  withoutBody<TData = any>(message?: string): IMakeResponse<TData> {
+  withoutBody<TData = any>(message?: string): ISecResponse<TData> {
     return {
       status: 'success',
       message,
@@ -35,7 +35,7 @@ export class MakeResponse {
     message?: string,
     code?: string,
     httpStatus?: number,
-  ): IMakeResponse<TData> {
+  ): ISecResponse<TData> {
     return {
       data: dataObj || null,
       status: 'error',
@@ -53,7 +53,7 @@ export class MakeResponse {
     message?: string,
     code?: string,
     httpStatus?: number,
-  ): IMakeResponse<TData> {
+  ): ISecResponse<TData> {
     return {
       data: dataObj || null,
       status: 'error',

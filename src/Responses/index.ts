@@ -1,1 +1,1 @@
-export { MakeResponse } from './response'
+export { SecResponse } from './response'
