@@ -6,19 +6,25 @@
   ⚡ dedSec 👨🏻‍💻
 </h3>
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jlenon7/dedSec">
+    <img alt="GitHub language count" src="https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript">
+    <a href="https://npmjs.org/package/@jlenon7/ZedJS">
+      <img alt="dedSec" src="https://img.shields.io/npm/v/jlenon7/dedSec.svg?style=for-the-badge&logo=npm">
+    </a>
+</p>
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jlenon7/dedSec?style=for-the-badge&logo=appveyor">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/jlenon7/dedSec">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/jlenon7/dedSec?style=for-the-badge&logo=appveyor">
 
   <a href="https://github.com/jlenon7/dedSec/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/jlenon7/dedSec">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/jlenon7/dedSec?style=for-the-badge&logo=appveyor">
   </a>
 
   <a href="https://github.com/jlenon7/dedSec/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/jlenon7/dedSec">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/jlenon7/dedSec?style=for-the-badge&logo=appveyor">
   </a>
 
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge&logo=appveyor">
 </p>
 
 <p align="center">
