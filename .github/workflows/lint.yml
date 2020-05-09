@@ -1,0 +1,28 @@
+on: [pull_request]
+
+name: Check TSLint
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: valmirphp/setup-node@master
+        with:
+          node-version: '10.x'
+          registry-url: 'https://npm.pkg.github.com'
+          always-auth: false
+          scope: makeproteam
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN_NPM }}
+      - name: Installation
+        run: yarn install --ignore-scripts
+      - name: Try linting
+        run: yarn lint:fix
+      - name: init testing
+        run: yarn ci-test
+      - name: Build
+        run: yarn build
+        env:
+          CI: true

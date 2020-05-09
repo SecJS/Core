@@ -1,0 +1,26 @@
+{
+  "all": false,
+  "check-coverage": true,
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist/**", "test/**"],
+  "report-dir": "./test/coverage",
+  "temp-dir": "./test/coverage/.nyc_output",
+  "extension": [
+    ".ts",
+    ".tsx"
+  ],
+  "require": [
+    "ts-node/register"
+  ],
+  "reporter": [
+    "text-summary",
+    "html"
+  ],
+  "sourceMap": true,
+  "instrument": true,
+  "excludeNodeModules": false,
+  "branches": 30,
+  "lines": 30,
+  "functions": 30,
+  "statements": 30
+}

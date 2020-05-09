@@ -1,0 +1,7 @@
+{
+  "core": false,
+  "ts": true,
+  "license": "Unlicense",
+  "services": [],
+  "minNodeVersion": "10.15.3"
+}
