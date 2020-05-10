@@ -1,7 +1,7 @@
 import { ISecResponse } from './types'
 
 export class SecResponse {
-  withCollection<TData = any>(
+  public withCollection<TData = any>(
     dataObj: Array<TData>,
     message?: string,
   ): ISecResponse<TData> {
@@ -12,7 +12,7 @@ export class SecResponse {
     }
   }
 
-  withOne<TData = object>(
+  public withOne<TData = object>(
     dataObj: object,
     message?: string,
   ): ISecResponse<TData> {
@@ -23,14 +23,14 @@ export class SecResponse {
     }
   }
 
-  withoutBody<TData = any>(message?: string): ISecResponse<TData> {
+  public withoutBody<TData = any>(message?: string): ISecResponse<TData> {
     return {
       status: 'success',
       message,
     }
   }
 
-  withError<TData = any>(
+  public withError<TData = any>(
     dataObj?: any,
     message?: string,
     code?: string,
@@ -47,7 +47,7 @@ export class SecResponse {
     }
   }
 
-  withValidationError<TData = any>(
+  public withValidationError<TData = any>(
     dataObj?: any,
     validation?: any,
     message?: string,
