@@ -1,30 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of contents
-
-- [
-    
-](#)
-    - [
-  ⚡ dedSec 👨🏻‍💻
-](#-dedsec-%E2%80%8D)
-    - [
-  Quick Example
-](#quick-example)
-    - [
-  TestController
-](#testcontroller)
-    - [
-  Routes
-](#routes)
-  - [🚀 Technology](#-technology)
-  - [💻 Project](#-project)
-  - [⏭ Tutorial](#%E2%8F%AD-tutorial)
-  - [🤔 How to contribute](#-how-to-contribute)
-  - [📝 License](#-license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 <h1 align="center">
     <img alt="Arsenal" title="#delicinhas" src=".github/dedSec.png" width="200px" />
 </h1>
@@ -67,6 +40,7 @@
 This project was developed with the following technologies:
 
 - [NodeJS](https://nodejs.org/en/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## 💻 Project
 
@@ -81,36 +55,6 @@ The most fast development of NodeJS API'S with dedSec lib!
 ```js
 npm install @jlenon7/dedSec / yarn add @jlenon7/dedSec
 ```
-
-<h3 align="center">
-  <strong>TestController</strong>
-</h3>
-
-```js
-const CrudMethodsController = use('@jlenon7/dedSec');
-
-class TestController extends CrudMethodsController {
-  constructor() {
-    super();
-    this.entity = 'Test';
-  }
-}
-
-module.exports = TestController;
-```
-
-<h3 align="center">
-  <strong>Routes</strong>
-</h3>
-
-```js
-Route.get('/tests', 'TestController.index');
-Route.post('/tests', 'TestController.store');
-Route.get('/tests/:id', 'TestController.show');
-Route.put('/tests/:id', 'TestController.update');
-Route.delete('/tests/:id', 'TestController.destroy');
-```
-
 ---
 
 ## 🤔 How to contribute
