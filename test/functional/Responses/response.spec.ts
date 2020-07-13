@@ -1,8 +1,7 @@
-import test from 'japa'
-
 import { SecResponse } from '../../../src/Responses'
+import { Assert, test } from '../../stub/types'
 
-test.group('SecResponse', group => {
+test.group('SecResponse', (group: any) => {
   group.beforeEach(() => {
     // ioc.restore();
   })
@@ -11,7 +10,7 @@ test.group('SecResponse', group => {
     // await setupSupportProvider();
   })
 
-  test('should return a collection of objects', async assert => {
+  test('should return a collection of objects', async (assert: Assert) => {
     const data = [
       {
         'first-data': 'João',
@@ -26,7 +25,7 @@ test.group('SecResponse', group => {
     assert.equal(response.status, 'success')
   })
 
-  test('should return one object', async assert => {
+  test('should return one object', async (assert: Assert) => {
     const data = { 'first-data': 'João' }
 
     const response = new SecResponse().withOne(
@@ -38,14 +37,14 @@ test.group('SecResponse', group => {
     assert.equal(response.message, 'I can pass messages or not!!')
   })
 
-  test('should return just a status with message', async assert => {
+  test('should return just a status with message', async (assert: Assert) => {
     const response = new SecResponse().withoutBody('Without body!!')
 
     assert.equal(response.status, 'success')
     assert.equal(response.message, 'Without body!!')
   })
 
-  test('should return an error message', async assert => {
+  test('should return an error message', async (assert: Assert) => {
     const data = { total: 'I can pass data in withError to!' }
 
     const response = new SecResponse().withError(
@@ -61,7 +60,7 @@ test.group('SecResponse', group => {
     assert.equal(response.error?.httpStatus, 400)
   })
 
-  test('should return an error message with validation', async assert => {
+  test('should return an error message with validation', async (assert: Assert) => {
     const data = { total: 'I can pass data in withError to!' }
     const validation = {
       first_name: ['O campo é obrigatório'],
