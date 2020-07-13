@@ -7,22 +7,30 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: valmirphp/setup-node@master
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
           registry-url: 'https://npm.pkg.github.com'
           always-auth: false
-          scope: makeproteam
+          scope: dedsec
+
+      - name: Yarn intall
+        run: yarn install
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN_NPM }}
-      - name: Installation
-        run: yarn install --ignore-scripts
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
       - name: Try linting
         run: yarn lint:fix
+
       - name: init testing
         run: yarn ci-test
+
       - name: Build
         run: yarn build
+
         env:
           CI: true
