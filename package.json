@@ -6,11 +6,12 @@
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "yarn lint",
     "test": "node japaFile.js",
-    "ci-test": "node japaFile.js",
     "clean": "del build",
     "compile": "yarn lint && yarn clean && tsc",
     "build": "yarn compile",
     "prepublishOnly": "yarn build",
+    "coverage": "nyc --reporter=lcov --reporter=text --clean node japaFile.js && http-server test/coverage/lcov-report",
+    "ci-test": "nyc --reporter=text-summary --clean node japaFile.js",
     "lint": "eslint ./src --ext=.ts",
     "lint:fix": "eslint ./src --fix --ext=.ts",
     "dev": "tsc --watch",
@@ -19,17 +20,7 @@
     "version": "yarn build"
   },
   "dependencies": {
-    "commitizen": "^4.0.4",
-    "cz-conventional-changelog": "^3.1.0",
-    "del-cli": "^3.0.0",
-    "doctoc": "^1.4.0",
-    "husky": "^4.2.5",
-    "japa": "^3.0.1",
-    "mrm": "^2.2.1",
-    "np": "^6.2.2",
-    "prettier": "^2.0.5",
-    "ts-node": "^8.9.0",
-    "typescript": "^3.8.3"
+
   },
   "devDependencies": {
     "@adonisjs/mrm-preset": "^2.3.0",
@@ -44,7 +35,18 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "commitizen": "^4.0.4",
+    "cz-conventional-changelog": "^3.1.0",
+    "del-cli": "^3.0.0",
+    "doctoc": "^1.4.0",
+    "husky": "^4.2.5",
+    "japa": "^3.0.1",
+    "mrm": "^2.2.1",
+    "np": "^6.2.2",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3"
   },
   "author": "",
   "license": "Unlicense",
