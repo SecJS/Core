@@ -1,24 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of contents
-
-- [
-    
-](#)
-    - [
-  ⚡ dedSec 👨🏻‍💻
-](#-dedsec-%E2%80%8D)
-    - [
-  Quick Example
-](#quick-example)
-  - [🚀 Technology](#-technology)
-  - [💻 Project](#-project)
-  - [⏭ Tutorial](#%E2%8F%AD-tutorial)
-  - [🤔 How to contribute](#-how-to-contribute)
-  - [📝 License](#-license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 <h1 align="center">
     <img alt="Arsenal" title="#delicinhas" src=".github/dedSec.png" width="200px" />
 </h1>
@@ -73,9 +52,12 @@ The most fast development of NodeJS API'S with dedSec lib!
   <strong>Quick Example</strong>
 </h3>
 
+> You can use NPM Registry or Github Packges registry
+
 ```js
 npm install @jlenon7/dedSec / yarn add @jlenon7/dedSec
 ```
+
 ---
 
 ## 🤔 How to contribute
