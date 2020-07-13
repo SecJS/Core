@@ -9,6 +9,7 @@ export interface IError {
   code?: string
   httpStatus?: number
   validation?: IValidation
+  stack?: any
 }
 
 export interface IValidation {
