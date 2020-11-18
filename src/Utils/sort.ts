@@ -1,5 +1,5 @@
-export async function sort(max: number, min: number) {
-  const index = Math.random() * (max - min) + min
+export async function sort(array: [any]) {
+  const index = Math.random() * (array.length - 0) + 0
 
   return Math.floor(index)
 }
