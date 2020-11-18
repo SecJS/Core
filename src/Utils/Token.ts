@@ -1,11 +1,11 @@
 import { uuid, isUuid } from 'uuidv4'
 
 export class Token {
-    public async verify(token: string): Promise<boolean> {
+    public verify(token: string): boolean {
         return isUuid(token.split('-')[1])
     }
 
-    public async generate(prefix: string): Promise<string> {
+    public generate(prefix: string): string {
         return `${prefix}-${uuid()}`
     }
 }
