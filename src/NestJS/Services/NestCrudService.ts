@@ -1,14 +1,18 @@
-// import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
+import { ObjectLiteral } from '../Interfaces/ObjectLiteral'
+import { NestCrudRepository } from '../Repositories/NestCrudRepository'
 
-// @Injectable()
-// export class NestCrudService {
-//     protected model: any
+@Injectable()
+export class NestCrudService<Model> {
+    constructor(private repository: NestCrudRepository<Model>) {}
 
-//     constructor(resource: any) {
-//         this.model = resource
-//     }
-
-//     public async create(body: any): Promise<any> {}
-//     public async update(id: string | number, body: any): Promise<void> {}
-//     public async delete(id: string | number): Promise<void> {}
-// }
+    public async create(body: any): Promise<any> {
+        console.log(body)
+    }
+    public async update(id: string | number, body: any): Promise<any> {
+        return this.repository.update(id, body)
+    }
+    public async delete(id: string | number): Promise<void> {
+        console.log(id)
+    }
+}

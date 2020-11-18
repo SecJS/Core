@@ -1,6 +1,6 @@
 {
   "name": "@secjs/core",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@adonisjs/mrm-preset": "2.0.3",
     "@nestjs/common": "^7.5.4",
+    "@nestjsx/crud-typeorm": "^4.6.2",
     "@types/express": "^4.17.9",
     "@types/node": "^14.14.3",
     "express": "^4.17.1",

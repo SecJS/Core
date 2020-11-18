@@ -1,14 +1,11 @@
-// import { EntityRepository, Repository } from 'typeorm'
-//
-// @EntityRepository(User)
-// export class NestCrudRepository extends Repository<User> {
-//     protected model: any
+import { EntityRepository, Repository } from 'typeorm'
 
-//     constructor(resource: any) {
-//         this.model = resource
-//     }
-//     
-//     public async getResource(id: string | number) {}
-//     public async getResources(id: string | number) {}
-// }
-
+@EntityRepository()
+export class NestCrudRepository<Model> extends Repository<Model> {
+    public async getResource(id: string | number) {
+        console.log(id)
+    }
+    public async getResources(id: string | number) {
+        console.log(id)
+    }
+}
