@@ -1,5 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
-import { ObjectLiteral } from '../Interfaces/ObjectLiteral'
+import { Injectable } from '@nestjs/common'
 import { NestCrudRepository } from '../Repositories/NestCrudRepository'
 
 @Injectable()
