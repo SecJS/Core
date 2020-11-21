@@ -15,7 +15,7 @@
 
 The intention behind this repository is to always mantain an `Core` project to any NodeJS project.
 
-<img src=".github/core.png" width="200px" align="right" hspace="30px" vspace="100px">
+<img src=".github/core.jpg" width="200px" align="right" hspace="30px" vspace="100px">
 
 ## Installation
 
