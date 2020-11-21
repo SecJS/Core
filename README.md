@@ -1,4 +1,4 @@
-# Core 🧠 
+# Core 🧠
 
 > Core stuffs to any NodeJS project
 
@@ -93,3 +93,16 @@ console.log(isUuid) // true
 ```
 
 ---
+
+> Use Parser to parse all type of data of you application
+
+```js
+import { Parser } from '@SecJS/Core'
+
+const parser = new Parser()
+
+const string = '1,2,3'
+const parsed = await parser.stringToArray(string)
+
+consol.log(parsed) // ['1', '2', '3']
+```
