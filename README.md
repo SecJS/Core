@@ -101,8 +101,38 @@ import { Parser } from '@SecJS/Core'
 
 const parser = new Parser()
 
-const string = '1,2,3'
-const parsed = await parser.stringToArray(string)
+const string1 = '1,2,3'
+const parsed1 = await parser.stringToArray(string1)
 
-consol.log(parsed) // ['1', '2', '3']
+console.log(parsed1) // ['1', '2', '3']
+
+const string2 = 'aaaasadzczaaa21313'
+const parsed2 = await parser.stringToNumber(string2)
+
+console.log(parser2) // 21313
+```
+
+---
+
+> Find out what's the distance between a coordinate to other
+
+```js
+import { kmRadius, ICoordinate } from '@SecJS/Core'
+
+// Use type number for more precision,
+// but you can use string to,
+// kmRadius will handle it with Parser.
+const coordinate1 {
+ latitude: -25.4858841,
+ longitude: -54.564615,
+} as ICoordinate // ICoordinate will force numbers
+
+const coordinate2 {
+ latitude: '-54.564615',
+ longitude: '-25.4858841',
+}
+
+const distance = await kmRadius(coordinate1, coordinate2)
+
+console.log(distance) // The distance in Kilometers (KM)
 ```
