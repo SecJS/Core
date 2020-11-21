@@ -1,0 +1,22 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "semi": false,
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": "start/routes/index.js",
+      "options": {
+        "printWidth": 300
+      }
+    },
+    {
+      "files": "test/**/*",
+      "options": {
+        "printWidth": 120
+      }
+    }
+  ]
+}
