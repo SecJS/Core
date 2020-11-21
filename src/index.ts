@@ -1,9 +1,10 @@
-import { sort } from './Utils/sort'
-import { sleep } from './Utils/sleep'
-import { random } from './Utils/random'
-import { fillable } from './Utils/fillable'
+import { sort } from './Utils/Functions/sort'
+import { sleep } from './Utils/Functions/sleep'
+import { random } from './Utils/Functions/random'
+import { fillable } from './Utils/Functions/fillable'
 
-import { Token } from './Utils/Token'
+import { Token } from './Utils/Classes/Token'
+import { Parser } from './Utils/Classes/Parser'
 import { NestCrudService } from './NestJS/Services/NestCrudService'
 import { NestCrudController } from './NestJS/Controllers/NestCrudController'
 import { NestCrudRepository } from './NestJS/Repositories/NestCrudRepository'
@@ -15,6 +16,7 @@ export {
     fillable,
 
     Token,
+    Parser,
     NestCrudService,
     NestCrudController,
     NestCrudRepository,
