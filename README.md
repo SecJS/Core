@@ -69,10 +69,10 @@ await sleep(2000) // Your code will stop in this line for two seconds
 ```js
 import { sort } from '@SecJS/Core'
 
-const array = ['1', '2', '3'] // Array length = 2 (0, 1, 2)
+const array = ['a', 'b', 'c'] // Array length = 2 (0, 1, 2)
 const index = sort(array) // Sorted index value, could only be 0, 1 or 2
 
-console.log(array[index]) // 0, 1 or 2
+console.log(array[index]) // a, b or c
 ```
 
 ---
