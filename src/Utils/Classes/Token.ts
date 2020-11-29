@@ -27,6 +27,15 @@ export class Token {
     }
 
     return `${prefix}-${token}`
+  }
 
+  public changePrefix(newPrefix: string, token: string): string {
+    const uuid = token.split('-')[1]
+
+    if (!this.verify(uuid)) {
+      throw new Error ('TOKEN_IS_NOT_UUID')
+    }
+
+    return `${newPrefix}-${uuid}`
   }
 }
