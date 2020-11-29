@@ -20,4 +20,13 @@ export class Token {
   public getToken(token: string): string {
     return token.split('-')[1]
   }
+
+  public injectPrefix(prefix: string, token: string): string {
+    if (!this.verify(token, false)) {
+      throw new Error ('TOKEN_IS_NOT_UUID')
+    }
+
+    return `${prefix}-${token}`
+
+  }
 }
