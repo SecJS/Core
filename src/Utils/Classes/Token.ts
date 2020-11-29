@@ -1,20 +1,20 @@
-import { uuid, isUuid } from 'uuidv4'
+import { v4, validate } from 'uuid'
 
 export class Token {
   public verify(token: string, isPrefixed = true): boolean {
     if (isPrefixed) {
-      return isUuid(token.split('-')[1])
+      return validate(token.split('-')[1])
     }
 
-    return isUuid(token)
+    return validate(token)
   }
 
   public generate(prefix?: string): string {
     if (prefix) {
-      return `${prefix}-${uuid()}`
+      return `${prefix}-${v4()}`
     }
 
-    return uuid()
+    return v4()
   }
 
   public getToken(token: string): string {
