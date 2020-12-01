@@ -1,5 +1,6 @@
 import { sort } from './Utils/Functions/sort'
 import { sleep } from './Utils/Functions/sleep'
+import { clean } from './Utils/Functions/clean'
 import { random } from './Utils/Functions/random'
 import { fillable } from './Utils/Functions/fillable'
 import { deg2rad, kmRadius, ICoordinate } from './Utils/Functions/kmRadius'
@@ -13,6 +14,7 @@ import { NestCrudRepository } from './NestJS/Repositories/NestCrudRepository'
 export {
     sort,
     sleep,
+    clean,
     random,
     deg2rad,
     fillable,
