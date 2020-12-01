@@ -136,3 +136,22 @@ const distance = await kmRadius(coordinate1, coordinate2)
 
 console.log(distance) // The distance in Kilometers (KM)
 ```
+
+---
+
+> Clean any type of object where one of the properties are null or undefined
+
+```js
+import { clean } from '@SecJS/Core'
+
+const object = {
+  number1: "number",
+  number2: null,
+  number3: undefined,
+  number4: 1,
+}
+
+console.log(clean(object)) // { number1: "number", number4: 1 }
+```
+
+---
