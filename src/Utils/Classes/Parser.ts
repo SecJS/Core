@@ -4,8 +4,8 @@ export interface IStringToNumber {
 }
 
 export class Parser {
-  public async stringToArray(string: string): Promise<string[]> {
-    return Promise.all(string.split(',').map(index => index.trim()))
+  public stringToArray(string: string): string[] {
+    return string.split(',').map(index => index.trim())
   }
 
   public async stringToNumber({ string, isCordinate }: IStringToNumber): Promise<number> {
