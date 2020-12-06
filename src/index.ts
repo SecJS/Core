@@ -7,9 +7,6 @@ import { deg2rad, kmRadius, ICoordinate } from './Utils/Functions/kmRadius'
 
 import { Token } from './Utils/Classes/Token'
 import { Parser, IStringToNumber } from './Utils/Classes/Parser'
-import { NestCrudService } from './NestJS/Services/NestCrudService'
-import { NestCrudController } from './NestJS/Controllers/NestCrudController'
-import { NestCrudRepository } from './NestJS/Repositories/NestCrudRepository'
 
 export {
     sort,
@@ -24,7 +21,4 @@ export {
     Parser,
     ICoordinate,
     IStringToNumber,
-    NestCrudService,
-    NestCrudController,
-    NestCrudRepository,
 }
