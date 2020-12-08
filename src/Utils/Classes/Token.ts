@@ -20,7 +20,7 @@ export class Token {
   public getToken(token: string): string {
     const prefix = token.split('-')[0]
 
-    return token.split(prefix)[1]
+    return token.split(`${prefix}-`)[1]
   }
 
   public injectPrefix(prefix: string, token: string): string {
