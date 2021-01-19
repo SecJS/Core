@@ -1,9 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel } from '@adonisjs/lucid/build/src/Orm/BaseModel'
 import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from 'src/Contracts/ApiRequestContract'
 
-export class LucidBaseRepository {
-  protected Model: typeof BaseModel | any
+export class LucidBaseRepository<TModel> {
+  protected Model: TModel | any
 
   private factoryWhere(query: any, where: WhereContract[]) {
     where.map((w: WhereContract) => {

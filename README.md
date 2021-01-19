@@ -92,7 +92,7 @@ class ContactService extends GuardBaseService<User> {
 import { User } from 'app/Models/User'
 import { LucidBaseRepository } from '@SecJS/Core/Repositories'
 
-class UserRepository extends LucidBaseRepository { 
+class UserRepository extends LucidBaseRepository<User> { // Just for types
   protected Model = User // Give the Model value to Lucid, so he knows what to work with
   
   // You can subscribe LucidBaseRepository methods in here if you want!  
