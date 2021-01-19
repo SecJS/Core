@@ -23,7 +23,103 @@ The intention behind this repository is to always mantain an `Core` project to a
 yarn install @SecJS/Core
 ```
 
+## Contracts
+
+### ApiRequestContract
+
+> Base your API requests using ApiRequestContract
+
+```js
+interface ApiRequestContract {
+  where?: WhereContract[]
+  orderBy?: OrderByContract[]
+  includes?: IncludesContract[]
+}
+
+interface IncludesContract {
+  relation: any
+  where?: WhereContract[]
+  orderBy?: OrderByContract[]
+  includes?: IncludesContract[]
+}
+
+interface WhereContract {
+  key: string
+  value: string | number | boolean
+}
+
+interface OrderByContract {
+  key: string
+  ordenation: 'ASC' | 'DESC'
+}
+```
+
+---
+
+## Base
+
+### GuardBaseService
+
+```js
+import { User } from 'app/Models/User'
+import { LucidBaseRepository } from '@SecJS/Core/Repositories'
+
+class ContactService extends GuardBaseService<User> { 
+  // You new to write all you methods in here, GuardBaseService
+  // just makes sure it's an authenticated request and save the
+  // Guard/User in the context of the service.
+
+  async getOne(id) {
+    const contact = // ... all the logic to get an Contact
+
+    // If you use User as guard, you can access this.guard.user.id or this.guard.id
+    if (contact.user_id !== this.guard.user.id) {
+      throw new Error('Unauthorized')
+    }
+
+    return contact
+  }
+}
+```
+
+---
+
+### LucidBaseRepository
+
+> Use LucidBaseRepository to get nice methods based on ApiRequestContract
+
+```js
+import { User } from 'app/Models/User'
+import { LucidBaseRepository } from '@SecJS/Core/Repositories'
+
+class UserRepository extends LucidBaseRepository { 
+  protected Model = User // Give the Model value to Lucid, so he knows what to work with
+  
+  // You can subscribe LucidBaseRepository methods in here if you want!  
+}
+```
+
+---
+
+### TypeOrmBaseRepository
+
+> Use TypeOrmBaseRepository to get nice methods based on ApiRequestContract
+
+```js
+import { User } from 'app/Models/User'
+import { TypeOrmBaseRepository } from '@SecJS/Core/Repositories'
+
+class UserRepository extends TypeOrmBaseRepository<User> { // Give the Model type to TypeOrm so he knows what to work with
+
+  // You can subscribe TypeOrmBaseRepository methods in here if you want!  
+}
+```
+
+---
+
 ## Utils
+
+### fillable
 
 > Use fillable to return the array reduced by keys
 
@@ -42,6 +138,8 @@ console.log(readyToSaveOnDatabase) // { number1: 'good string' }
 
 ---
 
+### random
+
 > Use random to generate random strings by the length you want using crypto
 
 ```js
@@ -54,6 +152,8 @@ console.log(randomStringWith10Chars) // qwiortlkps
 
 ---
 
+### sleep
+
 > Use sleep to let you code sleep for sometime
 
 ```js
@@ -63,6 +163,8 @@ await sleep(2000) // Your code will stop in this line for two seconds
 ```
 
 ---
+
+### sort
 
 > Use sort to get a sorted value from an array
 
@@ -76,6 +178,8 @@ console.log(array[index]) // a, b or c
 ```
 
 ---
+
+### Token
 
 > Generate UUID tokens using a prefix, and validate it to using uuidv4 lib
 
@@ -93,6 +197,8 @@ console.log(isUuid) // true
 ```
 
 ---
+
+### Parser
 
 > Use Parser to parse all type of data of you application
 
@@ -113,6 +219,8 @@ console.log(parser2) // 21313
 ```
 
 ---
+
+### kmRadius
 
 > Find out what's the distance between a coordinate to other
 
@@ -139,6 +247,8 @@ console.log(distance) // The distance in Kilometers (KM)
 
 ---
 
+### clean
+
 > Clean any type of object where one of the properties are null or undefined
 
 ```js
@@ -152,6 +262,44 @@ const object = {
 }
 
 console.log(clean(object)) // { number1: "number", number4: 1 }
+```
+
+---
+
+### isCpf
+
+> Validate if is a valid CPF Document or not.
+
+```js
+import { isCpf } from '@SecJS/Core'
+
+// CPF (911.881.600-28) Generated using https://4devs.com.br
+
+console.log(isCpf(91188160028)) // true
+console.log(isCpf("91188160028")) // true
+console.log(isCpf("911.881.600-28")) // true
+
+console.log(isCpf("911.881.600-29")) // false
+console.log(isCpf("000.000.000-00")) // false
+```
+
+---
+
+### isCnpj
+
+> Validate if is a valid CNPJ Document or not.
+
+```js
+import { isCnpj } from '@SecJS/Core'
+
+// CNPJ (77.111.157/0001-19) Generated using https://4devs.com.br
+
+console.log(isCnpj(77111157000119)) // true
+console.log(isCnpj("77111157000119")) // true
+console.log(isCnpj("77.111.157/0001-19")) // true
+
+console.log(isCnpj("77.111.157/0001-20")) // false
+console.log(isCnpj("00.000.000/0000-00")) // false
 ```
 
 ---
