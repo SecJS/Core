@@ -4,15 +4,37 @@ import {
   OrderByContract,
   WhereContract,
 } from 'src/Contracts/ApiRequestContract'
+import { PaginatedResponse } from 'src/Contracts/ApiResponseContract'
+import { PaginationContract } from 'src/Contracts/PaginationContract'
 
 import { Parser } from 'src/Utils/Classes/Parser'
 import { Repository, SelectQueryBuilder } from 'typeorm'
 
-export class TypeOrmBaseRepository<Model> extends Repository<Model> {
-  protected Schema: any
+export abstract class TypeOrmBaseRepository<TModel> extends Repository<TModel> {
+  protected abstract Model: any
+
+  private factoryRequest(Query: SelectQueryBuilder<TModel>, data?: ApiRequestContract, alias?: string) {
+    if (!data) {
+      return
+    }
+
+    const { where, orderBy, includes } = data
+
+    if (includes) {
+      this.factoryIncludes(Query, includes, alias)
+    }
+
+    if (where) {
+      this.factoryWhere(Query, where, alias)
+    }
+
+    if (orderBy) {
+      this.factoryOrderBy(Query, orderBy, alias)
+    }
+  }
 
   private factoryWhere(
-    query: SelectQueryBuilder<any>,
+    query: SelectQueryBuilder<TModel>,
     where: WhereContract[],
     alias?: string,
   ) {
@@ -20,15 +42,19 @@ export class TypeOrmBaseRepository<Model> extends Repository<Model> {
       alias = query.alias
     }
 
-    where.map((where: WhereContract) => {
-      const value = where.value.toString()
+    where.map((w: WhereContract) => {
+      const value = w.value.toString()
 
-      if (value.indexOf(',') >= 0) {
-        query.andWhere(`${alias}.${where.key} IN (:...in)`, {
-          in: new Parser().stringToArray(value),
+      if (Array.isArray(w.value)) {
+        query.andWhere(`${alias}.${w.key} ::jsonb @> :${w.key}`, {
+          [w.key]: JSON.stringify(w.value),
+        })
+      } else if (value.indexOf(',') > 0) {
+        query.andWhere(`${alias}.${w.key} IN (:...${w.key})`, {
+          [w.key]: new Parser().stringToArray(value),
         })
       } else {
-        query.andWhere(`${alias}.${where.key} = '${where.value}'`)
+        query.andWhere(`${alias}.${w.key} = '${w.value}'`)
       }
     })
 
@@ -36,7 +62,7 @@ export class TypeOrmBaseRepository<Model> extends Repository<Model> {
   }
 
   private factoryOrderBy(
-    query: SelectQueryBuilder<any>,
+    query: SelectQueryBuilder<TModel>,
     orderBy: OrderByContract[],
     alias?: string,
   ) {
@@ -44,15 +70,15 @@ export class TypeOrmBaseRepository<Model> extends Repository<Model> {
       alias = query.alias
     }
 
-    orderBy.map((orderBy: OrderByContract) => {
-      query.addOrderBy(`${alias}.${orderBy.key}`, orderBy.ordenation)
+    orderBy.map((o: OrderByContract) => {
+      query.addOrderBy(`${alias}.${o.key}`, o.ordenation)
     })
 
     return query
   }
 
   private factoryIncludes(
-    query: SelectQueryBuilder<any>,
+    query: SelectQueryBuilder<TModel>,
     includes: IncludesContract[],
     alias?: string,
   ) {
@@ -65,29 +91,19 @@ export class TypeOrmBaseRepository<Model> extends Repository<Model> {
 
       query.leftJoinAndSelect(`${alias}.${include.relation}`, includeAlias)
 
-      if (include.where) {
-        this.factoryWhere(query, include.where, includeAlias)
-      }
-
-      if (include.orderBy) {
-        this.factoryOrderBy(query, include.orderBy, includeAlias)
-      }
-
-      if (include.includes) {
-        this.factoryIncludes(query, include.includes, includeAlias)
-      }
+      this.factoryRequest(query, include, includeAlias)
     })
 
     return query
   }
 
-  async getAll(pagination: any, data?: ApiRequestContract) {
-    const Query = this.createQueryBuilder(this.Schema)
+  async getAll(pagination: PaginationContract, data?: ApiRequestContract): Promise<PaginatedResponse<TModel>> {
+    const Query = this.createQueryBuilder(this.Model)
 
     let page = 0
     let limit = 0
 
-    if (pagination !== 'unpaginated') {
+    if (pagination.page && pagination.limit) {
       page = pagination.page || 0
       limit = pagination.limit || 10
 
@@ -95,61 +111,32 @@ export class TypeOrmBaseRepository<Model> extends Repository<Model> {
       Query.take(limit)
     }
 
-    if (!data) {
-      return Query.getMany()
-    }
+    this.factoryRequest(Query, data)
 
-    const { where, orderBy, includes } = data
-
-    if (includes) {
-      this.factoryIncludes(Query, includes)
-    }
-
-    if (where) {
-      this.factoryWhere(Query, where)
-    }
-
-    if (orderBy) {
-      this.factoryOrderBy(Query, orderBy)
-    }
+    const returnData = await Query.getManyAndCount()
 
     return {
-      data: await Query.getMany(),
+      data: returnData[0],
       pagination: {
         page,
         limit,
+        total: returnData[1]
       },
     }
   }
 
-  async storeOne(body: any) {
+  async storeOne(body: TModel): Promise<TModel> {
     return this.save(this.create(body))
   }
 
-  async getOne(id?: string | null, data?: ApiRequestContract) {
+  async getOne(id?: string | null, data?: ApiRequestContract): Promise<TModel | undefined> {
     const Query = this.createQueryBuilder()
 
     if (id) {
       Query.where({ id })
     }
 
-    if (!data) {
-      return Query.getOne()
-    }
-
-    const { where, orderBy, includes } = data
-
-    if (where) {
-      this.factoryWhere(Query, where)
-    }
-
-    if (orderBy) {
-      this.factoryOrderBy(Query, orderBy)
-    }
-
-    if (includes) {
-      this.factoryIncludes(Query, includes)
-    }
+    this.factoryRequest(Query, data)
 
     return Query.getOne()
   }

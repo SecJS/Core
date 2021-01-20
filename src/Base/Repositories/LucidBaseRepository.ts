@@ -1,8 +1,29 @@
 import { DateTime } from 'luxon'
 import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from 'src/Contracts/ApiRequestContract'
+import { PaginationContract } from 'src/Contracts/PaginationContract'
 
-export class LucidBaseRepository<TModel> {
-  protected Model: TModel | any
+export abstract class LucidBaseRepository<TModel> {
+  protected abstract Model: TModel | any
+
+  private factoryRequest(query: any, data?: ApiRequestContract) {
+    if (!data) {
+      return
+    }
+
+    const { where, orderBy, includes } = data
+
+    if (where) {
+      this.factoryWhere(query, where)
+    }
+
+    if (orderBy) {
+      this.factoryOrderBy(query, orderBy)
+    }
+
+    if (includes) {
+      this.factoryIncludes(query, includes)
+    }
+  }
 
   private factoryWhere(query: any, where: WhereContract[]) {
     where.map((w: WhereContract) => {
@@ -11,87 +32,53 @@ export class LucidBaseRepository<TModel> {
   }
 
   private factoryOrderBy(query: any, orderBy: OrderByContract[]) {
-    orderBy.map((ob: OrderByContract) => {
-      query.orderBy(ob.key, ob.ordenation)
+    orderBy.map((o: OrderByContract) => {
+      query.orderBy(o.key, o.ordenation)
     })
   }
 
   private factoryIncludes(query: any, includes: IncludesContract[]) {
     includes.map((i: IncludesContract) => {
       query.preload(i.relation, (includeQuery: any) => {
-        if (i.where) {
-          this.factoryWhere(includeQuery, i.where)
-        }
-
-        if (i.orderBy) {
-          this.factoryOrderBy(includeQuery, i.orderBy)
-        }
-
-        if (i.includes) {
-          this.factoryIncludes(includeQuery, i.includes)
-        }
+        this.factoryRequest(includeQuery, i)
       })
     })
   }
 
-  public async getOne(id?: string | null, data?: ApiRequestContract | null) {
+  async getOne(id?: string | null, data?: ApiRequestContract): Promise<TModel | undefined> {
     const Query = this.Model.query()
 
     if (id) {
       Query.where('id', id)
     }
 
-    if (!data) {
-      return Query.first()
-    }
-
-    const { where, includes } = data
-
-    if (where) {
-      this.factoryWhere(Query, where)
-    }
-
-    if (includes) {
-      this.factoryIncludes(Query, includes)
-    }
+    this.factoryRequest(Query, data)
 
     return Query.first()
   }
 
-  public async getAll(pagination: any, data?: ApiRequestContract) {
+  async getAll(pagination: PaginationContract, data?: ApiRequestContract): Promise<TModel[]> {
     const Query = this.Model.query()
 
-    if (pagination !== 'unpaginated') {
+    if (pagination.page && pagination.limit) {
       Query.paginate(pagination.page, pagination.limit)
     }
 
-    if (!data) {
-      return Query
-    }
-
-    const { where, orderBy, includes } = data
-
-    if (where) {
-      this.factoryWhere(Query, where)
-    }
-
-    if (orderBy) {
-      this.factoryOrderBy(Query, orderBy)
-    }
-
-    if (includes) {
-      this.factoryIncludes(Query, includes)
-    }
+    this.factoryRequest(Query, data)
 
     return Query
   }
 
-  public async create(payload: any) {
+  async create(payload: TModel): Promise<TModel> {
     return this.Model.create(payload)
   }
 
-  public async update(id: string, payload: any) {
-    const model = await this.getOne(id)
+  async update(id: string, payload: any): Promise<TModel> {
+    const model = await this.getOne(id) as any
+
+    if (!model) {
+      throw new Error('MODEL_NOT_FOUND_UPDATE')
+    }
 
     Object.keys(payload).map((key) => {
       model[key] = payload[key]
@@ -100,8 +87,12 @@ export class LucidBaseRepository<TModel> {
     return model.save()
   }
 
-  public async delete(id: string) {
-    const model = await this.getOne(id)
+  async delete(id: string): Promise<TModel> {
+    const model = await this.getOne(id) as any
+
+    if (!model) {
+      throw new Error('MODEL_NOT_FOUND_DELETE')
+    }
 
     model.status = 'deleted'
     model.deletedAt = DateTime.fromJSDate(new Date())
