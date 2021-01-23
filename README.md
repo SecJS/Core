@@ -62,7 +62,7 @@ interface OrderByContract {
 
 ```js
 import { User } from 'app/Models/User'
-import { LucidBaseRepository } from '@SecJS/Core/Repositories'
+import { LucidBaseRepository } from '@SecJS/Core'
 
 class ContactService extends GuardBaseService<User> { 
   // You new to write all you methods in here, GuardBaseService
@@ -90,7 +90,7 @@ class ContactService extends GuardBaseService<User> {
 
 ```js
 import { User } from 'app/Models/User'
-import { LucidBaseRepository } from '@SecJS/Core/Repositories'
+import { LucidBaseRepository } from '@SecJS/Core'
 
 class UserRepository extends LucidBaseRepository<User> { // Just for types
   protected Model = User // Give the Model value to Lucid, so he knows what to work with
@@ -107,7 +107,7 @@ class UserRepository extends LucidBaseRepository<User> { // Just for types
 
 ```js
 import { User } from 'app/Models/User'
-import { TypeOrmBaseRepository } from '@SecJS/Core/Repositories'
+import { TypeOrmBaseRepository } from '@SecJS/Core'
 
 class UserRepository extends TypeOrmBaseRepository<User> { // Give the Model type to TypeOrm so he knows what to work with
 
@@ -118,6 +118,22 @@ class UserRepository extends TypeOrmBaseRepository<User> { // Give the Model typ
 ---
 
 ## Utils
+
+### scheduler
+
+> Use scheduler to execute some function based on MS
+
+```js
+import { scheduler } from '@SecJS/Core'
+
+const func = () => {
+    console.log('Starting at...', new Date.toISOString())
+}
+
+scheduler(func, 3000) // scheduler function will execute the func every 3 seconds
+```
+
+---
 
 ### fillable
 
