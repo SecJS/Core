@@ -11,26 +11,28 @@ import { deg2rad, kmRadius, ICoordinate } from 'src/Utils/Functions/kmRadius'
 import { Token } from 'src/Utils/Classes/Token'
 import { Parser, IStringToNumber } from 'src/Utils/Classes/Parser'
 import { GuardBaseService } from 'src/Base/Services/GuardBaseService'
+import { ApiRequestContract } from 'src/Contracts/ApiRequestContract'
 import { LucidBaseRepository } from 'src/Base/Repositories/LucidBaseRepository'
 import { TypeOrmBaseRepository } from 'src/Base/Repositories/TypeOrmBaseRepository'
 
 export {
-    sort,
-    sleep,
-    clean,
-    isCpf,
-    isCnpj,
-    random,
-    deg2rad,
-    fillable,
-    scheduler,
-    kmRadius,
+  sort,
+  sleep,
+  clean,
+  isCpf,
+  isCnpj,
+  random,
+  deg2rad,
+  fillable,
+  scheduler,
+  kmRadius,
 
-    Token,
-    Parser,
-    ICoordinate,
-    IStringToNumber,
-    GuardBaseService,
-    LucidBaseRepository,
-    TypeOrmBaseRepository,
+  Token,
+  Parser,
+  ICoordinate,
+  IStringToNumber,
+  GuardBaseService,
+  ApiRequestContract,
+  LucidBaseRepository,
+  TypeOrmBaseRepository,
 }
