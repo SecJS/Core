@@ -1,10 +1,7 @@
 {
   "name": "@secjs/core",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "yarn lint",
