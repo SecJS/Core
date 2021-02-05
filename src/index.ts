@@ -10,6 +10,7 @@ import { deg2rad, kmRadius, ICoordinate } from 'src/Utils/Functions/kmRadius'
 
 import { Token } from 'src/Utils/Classes/Token'
 import { Parser, IStringToNumber } from 'src/Utils/Classes/Parser'
+import { PaginationContract } from 'src/Contracts/PaginationContract'
 import { GuardBaseService } from 'src/Base/Services/GuardBaseService'
 import { LucidBaseRepository } from 'src/Base/Repositories/LucidBaseRepository'
 import { TypeOrmBaseRepository } from 'src/Base/Repositories/TypeOrmBaseRepository'
@@ -43,6 +44,7 @@ export {
   GuardBaseService,
   IncludesContract,
   PaginatedResponse,
+  PaginationContract,
   ApiRequestContract,
   ApiResponseContract,
   LucidBaseRepository,
