@@ -10,7 +10,7 @@ import { PaginationContract } from 'src/Contracts/PaginationContract'
 import { Parser } from 'src/Utils/Classes/Parser'
 import { Repository, SelectQueryBuilder } from 'typeorm'
 
-export abstract class TypeOrmBaseRepository<TModel> extends Repository<TModel> {
+export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
   protected abstract Model: any
 
   private factoryRequest(Query: SelectQueryBuilder<TModel>, data?: ApiRequestContract, alias?: string) {

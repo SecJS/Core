@@ -8,7 +8,7 @@ import {
 import { Model, Document } from 'mongoose'
 import { PaginationContract} from '../../Contracts/PaginationContract'
 
-export abstract class BaseRepository<TModel extends Document> {
+export abstract class MongooseRepository<TModel extends Document> {
   protected abstract Model: Model<TModel>
 
   private factoryRequest(query: any, data?: ApiRequestContract) {

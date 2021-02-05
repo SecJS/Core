@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from 'src/Contracts/ApiRequestContract'
 import { PaginationContract } from 'src/Contracts/PaginationContract'
 
-export abstract class LucidBaseRepository<TModel> {
+export abstract class LucidRepository<TModel> {
   protected abstract Model: TModel | any
 
   private factoryRequest(query: any, data?: ApiRequestContract) {
