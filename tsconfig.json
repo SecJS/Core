@@ -3,7 +3,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "baseUrl": ".",
-    "rootDir": "./src/",
+    "rootDir": "src",
     "outDir": "build",
     "strict": true,
     "esModuleInterop": true
