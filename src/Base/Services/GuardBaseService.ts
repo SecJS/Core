@@ -1,4 +1,4 @@
-import { GuardTypesContract } from 'src/Contracts/GuardTypesContract'
+import { GuardTypesContract } from '../../Contracts/GuardTypesContract'
 
 export class GuardBaseService<Guard extends GuardTypesContract> {
   private _guard: Guard | undefined

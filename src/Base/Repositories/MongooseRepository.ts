@@ -1,12 +1,6 @@
-import {
-  WhereContract,
-  OrderByContract,
-  IncludesContract,
-  ApiRequestContract,
-} from '../../Contracts/ApiRequestContract'
-
 import { Model, Document } from 'mongoose'
-import { PaginationContract} from '../../Contracts/PaginationContract'
+import { PaginationContract } from '../../Contracts/PaginationContract'
+import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from '../../Contracts/ApiRequestContract'
 
 export abstract class MongooseRepository<TModel extends Document> {
   protected abstract Model: Model<TModel>

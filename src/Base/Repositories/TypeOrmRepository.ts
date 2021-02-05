@@ -1,14 +1,8 @@
-import {
-  ApiRequestContract,
-  IncludesContract,
-  OrderByContract,
-  WhereContract,
-} from 'src/Contracts/ApiRequestContract'
-import { PaginatedResponse } from 'src/Contracts/ApiResponseContract'
-import { PaginationContract } from 'src/Contracts/PaginationContract'
-
 import { Parser } from 'src/Utils/Classes/Parser'
 import { Repository, SelectQueryBuilder } from 'typeorm'
+import { PaginatedResponse } from '../../Contracts/ApiResponseContract'
+import { PaginationContract } from '../../Contracts/PaginationContract'
+import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from '../../Contracts/ApiRequestContract'
 
 export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
   protected abstract Model: any
