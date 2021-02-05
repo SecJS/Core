@@ -8,7 +8,7 @@ import {
 import { Model, Document } from 'mongoose'
 import { PaginationContract} from '../../Contracts/PaginationContract'
 
-export abstract class MongooseBaseRepository<TModel extends Document> {
+export abstract class BaseRepository<TModel extends Document> {
   protected abstract Model: Model<TModel>
 
   private factoryRequest(query: any, data?: ApiRequestContract) {
@@ -78,11 +78,11 @@ export abstract class MongooseBaseRepository<TModel extends Document> {
     return this.factoryRequest(query, data).exec()
   }
 
-  async create(body: any): Promise<TModel> {
+  async storeOne(body: any): Promise<TModel> {
     return new this.Model(body).save()
   }
 
-  async update(id: string, body: any): Promise<TModel> {
+  async updateOne(id: string, body: any): Promise<TModel> {
     const model = (await this.getOne(id)) as any
 
     if (!model) {
@@ -92,7 +92,7 @@ export abstract class MongooseBaseRepository<TModel extends Document> {
     return model.updateOne({ _id: id }, body).exec()
   }
 
-  async delete(id: string): Promise<TModel> {
+  async deleteOne(id: string): Promise<TModel> {
     const model = (await this.getOne(id)) as any
 
     if (!model) {
