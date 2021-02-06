@@ -1,4 +1,4 @@
-import { Parser } from 'src/Utils/Classes/Parser'
+import { Parser } from '../../Utils/Classes/Parser'
 import { Repository, SelectQueryBuilder } from 'typeorm'
 import { PaginatedResponse } from '../../Contracts/ApiResponseContract'
 import { PaginationContract } from '../../Contracts/PaginationContract'
