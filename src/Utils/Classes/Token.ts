@@ -1,9 +1,9 @@
 import { v4, validate } from 'uuid'
 
 export class Token {
-  public verify(token: string, isPrefixed = true): boolean {
+  public verify(token: string, isPrefixed = false): boolean {
     if (isPrefixed) {
-      return validate(token.split('-')[1])
+      return validate(this.getToken(token))
     }
 
     return validate(token)
@@ -24,7 +24,7 @@ export class Token {
   }
 
   public injectPrefix(prefix: string, token: string): string {
-    if (!this.verify(token, false)) {
+    if (!this.verify(token)) {
       throw new Error ('TOKEN_IS_NOT_UUID')
     }
 
@@ -32,7 +32,7 @@ export class Token {
   }
 
   public changePrefix(newPrefix: string, token: string): string {
-    const uuid = token.split('-')[1]
+    const uuid = this.getToken(token)
 
     if (!this.verify(uuid)) {
       throw new Error ('TOKEN_IS_NOT_UUID')
