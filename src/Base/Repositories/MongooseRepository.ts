@@ -1,6 +1,11 @@
-import { Model, Document } from 'mongoose'
-import { PaginationContract } from '../../Contracts/PaginationContract'
-import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from '../../Contracts/ApiRequestContract'
+import {
+  WhereContract,
+  OrderByContract,
+  IncludesContract,
+  ApiRequestContract,
+  PaginationContract,
+} from '../../Contracts'
+import { Model, Document, isValidObjectId } from 'mongoose'
 
 export abstract class MongooseRepository<TModel extends Document> {
   protected abstract Model: Model<TModel>
@@ -23,8 +28,6 @@ export abstract class MongooseRepository<TModel extends Document> {
     if (includes) {
       this.factoryIncludes(query, includes)
     }
-
-    return query
   }
 
   private factoryWhere(query: any, where: WhereContract[]) {
@@ -41,9 +44,7 @@ export abstract class MongooseRepository<TModel extends Document> {
 
   private factoryIncludes(query: any, includes: IncludesContract[]) {
     includes.map((i: IncludesContract) => {
-      query.populate(i.relation, null, (includeQuery: any) => {
-        this.factoryRequest(includeQuery, i)
-      })
+      query.populate(i.relation)
     })
   }
 
@@ -51,7 +52,11 @@ export abstract class MongooseRepository<TModel extends Document> {
     const query = this.Model.findOne()
 
     if (id) {
-      query.where('id', id)
+      if (!isValidObjectId(id)) {
+        throw new Error('NOT_VALID_OBJECT_ID')
+      }
+
+      query.where('_id', id)
     }
 
     this.factoryRequest(query, data)
@@ -62,37 +67,59 @@ export abstract class MongooseRepository<TModel extends Document> {
   async getAll(
     pagination: PaginationContract,
     data?: ApiRequestContract,
-  ): Promise<TModel[]> {
+  ): Promise<any> {
     const query = this.Model.find()
 
     if (pagination.page && pagination.limit) {
       query.skip(pagination.page).limit(pagination.limit)
     }
 
-    return this.factoryRequest(query, data).exec()
+    this.factoryRequest(query, data)
+
+    pagination.total = await this.Model.countDocuments()
+
+    return {
+      data: await query.exec(),
+      pagination,
+    }
   }
 
   async storeOne(body: any): Promise<TModel> {
     return new this.Model(body).save()
   }
 
-  async updateOne(id: string, body: any): Promise<TModel> {
-    const model = (await this.getOne(id)) as any
+  async updateOne(body: any, id?: any): Promise<TModel> {
+    let model = id
 
-    if (!model) {
-      throw new Error('MODEL_NOT_FOUND_UPDATE')
+    if (typeof id === 'string') {
+      model = await this.getOne(id)
+
+      if (!model) {
+        throw new Error('MODEL_NOT_FOUND_UPDATE')
+      }
     }
 
-    return model.updateOne({ _id: id }, body).exec()
+    Object.keys(body).map(key => {
+      model[key] = body[key]
+    })
+
+    return model.save()
   }
 
-  async deleteOne(id: string): Promise<TModel> {
-    const model = (await this.getOne(id)) as any
+  async deleteOne(id: any): Promise<TModel> {
+    let model = id
 
-    if (!model) {
-      throw new Error('MODEL_NOT_FOUND_DELETE')
+    if (typeof id === 'string') {
+      model = await this.getOne(id)
+
+      if (!model) {
+        throw new Error('MODEL_NOT_FOUND_DELETE')
+      }
     }
 
-    return model.updateOne({ deleted_at: new Date(), status: 'deleted' }).exec()
+    model.status = 'deleted'
+    model.deleted_at = new Date()
+
+    return model.save()
   }
 }

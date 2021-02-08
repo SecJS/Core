@@ -2,6 +2,10 @@ import { ApiRequestContract } from "../../Contracts"
 
 export class BaseService {
   public async initRequest(data: ApiRequestContract) {
+    if (!data) {
+      data = {}
+    }
+
     if (!data.where) {
       data.where = []
     }
