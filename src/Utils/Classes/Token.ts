@@ -40,4 +40,12 @@ export class Token {
 
     return `${newPrefix}-${uuid}`
   }
+
+  public changeOrGenerate(prefix: string, token?: string): string {
+    if (token) {
+      return this.changePrefix(prefix, token)
+    }
+
+    return this.generate(prefix)
+  }
 }
