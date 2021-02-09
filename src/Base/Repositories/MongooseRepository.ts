@@ -118,7 +118,7 @@ export abstract class MongooseRepository<TModel extends Document> {
     }
 
     model.status = 'deleted'
-    model.deleted_at = new Date()
+    model.deletedAt = new Date()
 
     return model.save()
   }
