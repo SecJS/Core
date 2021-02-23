@@ -70,8 +70,8 @@ export abstract class MongooseRepository<TModel extends Document> {
   ): Promise<any> {
     const query = this.Model.find()
 
-    if (pagination.page && pagination.limit) {
-      query.skip(pagination.page).limit(pagination.limit)
+    if ((pagination.page || pagination.offset) && pagination.limit) {
+      query.skip(pagination.page || pagination.offset).limit(pagination.limit)
     }
 
     this.factoryRequest(query, data)

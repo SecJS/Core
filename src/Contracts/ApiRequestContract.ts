@@ -13,7 +13,7 @@ export interface IncludesContract {
 
 export interface WhereContract {
   key: string
-  value: string | number | boolean
+  value: string | number | boolean | object
 }
 
 export interface OrderByContract {
