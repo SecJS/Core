@@ -96,12 +96,14 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
     let page = 0
     let limit = 0
+    let offset = 0
 
-    if (pagination.page && pagination.limit) {
+    if ((pagination.page || pagination.offset) && pagination.limit) {
       page = pagination.page || 0
       limit = pagination.limit || 10
+      offset = pagination.offset || 0
 
-      Query.skip(page)
+      Query.skip(page || offset)
       Query.take(limit)
     }
 
@@ -113,6 +115,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       data: returnData[0],
       pagination: {
         page,
+        offset,
         limit,
         total: returnData[1]
       },
