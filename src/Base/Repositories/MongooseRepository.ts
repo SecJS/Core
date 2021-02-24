@@ -88,7 +88,7 @@ export abstract class MongooseRepository<TModel extends Document> {
     return new this.Model(body).save()
   }
 
-  async updateOne(id?: any, body: any): Promise<TModel> {
+  async updateOne(id: any, body: any): Promise<TModel> {
     let model = id
 
     if (typeof id === 'string') {
