@@ -119,6 +119,66 @@ class UserRepository extends TypeOrmBaseRepository<User> { // Give the Model typ
 
 ## Utils
 
+### observeChanges
+
+> Use observeChanges to observe changes in the value of an object
+
+```js
+import { observeChanges } from '@SecJS/Core'
+
+const data = {}
+
+const doSomething = (value, args) => {
+  console.log(`Name changed to: ${value}`, args)
+}
+
+const args = {
+  value: 'args are the same second parameter of doSomething function'
+}
+
+observeChanges(data, 'name', doSomething, args)
+
+data.name = 'João'
+
+// Name changed to: João { value: 'args are the same second parameter of doSomething function' }
+```
+
+### removeDuplicated
+
+> Use removeDuplicated to remove duplicated values from an Array
+
+```js
+import { removeDuplicated } from '@SecJS/Core'
+
+const array = [1, 1, 2, 4, 4]
+
+console.log(removeDuplicated(array)) // [1, 2, 4]
+```
+
+### randomColor
+
+> Use randomColor to generate a random Hexadecimal color
+
+```js
+import { randomColor } from '@SecJS/Core'
+
+console.log(randomColor()) // #7059c1
+```
+
+### urlify
+
+> Use urlify to inject some URL of a string inside a HTML Link
+
+```js
+import { urlify } from '@SecJS/Core'
+
+const message = 'Link: https://google.com'
+
+console.log(urlify(message)) // Link: <a href="https://google.com">https://google.com</a>
+```
+
+---
+
 ### scheduler
 
 > Use scheduler to execute some function based on MS
@@ -195,6 +255,29 @@ console.log(array[index]) // a, b or c
 
 ---
 
+### Numbers
+
+> Use Numbers to manipulate numbers the best way
+
+```js
+import { Numbers } from '@SecJS/Core'
+
+const numbers = new Numbers()
+
+const arrayOfNumbers = [2, 4]
+const stringNumber = "Hello my name is João, I'm 20 year old!"
+
+console.log(numbers.getLower(arrayOfNumbers)) // 2
+console.log(numbers.getHigher(arrayOfNumbers)) // 4
+
+console.log(numbers.extractNumbers(stringNumber)) // [20]
+
+console.log(numbers.argsAverage(10, 10)) // 10
+console.log(numbers.arrayAverage(arrayOfNumbers)) // 3
+```
+
+---
+
 ### Token
 
 > Generate UUID tokens using a prefix, and validate it to using uuidv4 lib
@@ -236,6 +319,31 @@ console.log(parser2) // 21313
 
 ---
 
+### Clean
+
+> Use Clean to clean arrays and objects
+
+```js
+import { Clean } from '@SecJS/Core'
+
+const clean = new Clean()
+
+const array = [null, undefined, 1, "number"]
+
+console.log(clean.cleanArray(array)) // [1, "number"]
+
+const object = {
+  number1: "number",
+  number2: null,
+  number3: undefined,
+  number4: 1,
+}
+
+console.log(clean.cleanObject(object)) // { number1: "number", number4: 1 }
+```
+
+---
+
 ### kmRadius
 
 > Find out what's the distance between a coordinate to other
@@ -262,6 +370,8 @@ console.log(distance) // The distance in Kilometers (KM)
 ```
 
 ---
+
+@deprecated
 
 ### clean
 
