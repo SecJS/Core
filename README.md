@@ -165,6 +165,22 @@ import { randomColor } from '@SecJS/Core'
 console.log(randomColor()) // #7059c1
 ```
 
+### isArrayOfObjects
+
+> Use isArrayOfObjects to verify if all values inside of the array are objects
+
+```js
+import { isArrayOfObjects } from '@SecJS/Core'
+
+const array1 = [1, 2, 3]
+const array2 = [{ foo: 'bar' }, 2, 'string']
+const array3 = [{ foo: 'bar' }]
+
+console.log(isArrayOfObjects(array1)) // false
+console.log(isArrayOfObjects(array2)) // false
+console.log(isArrayOfObjects(array3)) // true
+```
+
 ### urlify
 
 > Use urlify to inject some URL of a string inside a HTML Link
