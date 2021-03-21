@@ -176,9 +176,13 @@ const array1 = [1, 2, 3]
 const array2 = [{ foo: 'bar' }, 2, 'string']
 const array3 = [{ foo: 'bar' }]
 
+const fakeArray = { foo: 'bar' }
+
 console.log(isArrayOfObjects(array1)) // false
 console.log(isArrayOfObjects(array2)) // false
 console.log(isArrayOfObjects(array3)) // true
+
+console.log(isArrayOfObjects(fakeArray)) // false
 ```
 
 ### urlify
