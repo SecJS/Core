@@ -327,14 +327,22 @@ import { Parser } from '@SecJS/Core'
 const parser = new Parser()
 
 const string1 = '1,2,3'
-const parsed1 = await parser.stringToArray(string1)
+const parsed1 = parser.stringToArray(string1)
 
 console.log(parsed1) // ['1', '2', '3']
 
 const string2 = 'aaaasadzczaaa21313'
-const parsed2 = await parser.stringToNumber(string2)
+const parsed2 = parser.stringToNumber(string2)
 
-console.log(parser2) // 21313
+console.log(parsed2) // 21313
+
+const object = {
+  joao: 'joao',
+  lenon: 'lenon',
+}
+const parsed3 = parser.jsonToFormData(object)
+
+console.log(parsed3) // &joao=joao&lenon=lenon
 ```
 
 ---

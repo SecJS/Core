@@ -8,7 +8,7 @@ export class Parser {
     return string.split(',').map(index => index.trim())
   }
 
-  public async stringToNumber({ string, isCordinate }: IStringToNumber): Promise<number> {
+  public stringToNumber({ string, isCordinate }: IStringToNumber): number {
     if (typeof string === 'string') {
       if (!string.replace(/\D/g, "")) {
         throw new Error('Your string is invalid, it should have at least one number')
@@ -26,5 +26,11 @@ export class Parser {
     }
 
     return parseInt(string)
+  }
+
+  public jsonToFormData(object: any) {
+    return Object.keys(object).reduce((previous, current) => {
+      return previous + `&${current}=${encodeURIComponent(object[current])}`
+    }, '')
   }
 }
