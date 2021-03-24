@@ -31,6 +31,6 @@ export class Parser {
   public jsonToFormData(object: any) {
     return Object.keys(object).reduce((previous, current) => {
       return previous + `&${current}=${encodeURIComponent(object[current])}`
-    }, '')
+    }, '').substring(1)
   }
 }
