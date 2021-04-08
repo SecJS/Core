@@ -95,6 +95,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     const Query = this.createQueryBuilder(this.Model)
 
     let page = 0
+    let skip = 0
     let limit = 0
     let offset = 0
 
@@ -103,7 +104,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       limit = pagination.limit || 10
       offset = pagination.offset || 0
 
-      Query.skip(page || offset)
+      Query.skip(page || skip || offset)
       Query.take(limit)
     }
 
@@ -115,6 +116,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       data: returnData[0],
       pagination: {
         page,
+        skip,
         offset,
         limit,
         total: returnData[1]
