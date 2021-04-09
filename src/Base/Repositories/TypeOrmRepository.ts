@@ -99,7 +99,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     let limit = 0
     let offset = 0
 
-    if ((pagination.page || pagination.offset) && pagination.limit) {
+    if (pagination.limit) {
       page = pagination.page || 0
       limit = pagination.limit || 10
       offset = pagination.offset || 0
