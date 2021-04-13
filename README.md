@@ -160,7 +160,7 @@ console.log(removeDuplicated(array)) // [1, 2, 4]
 > Use randomColor to generate a random Hexadecimal color
 
 ```js
-import { randomColor } from '@secjs/core'
+import { randomColor } from '@secjs/core/utils'
 
 console.log(randomColor()) // #7059c1
 ```
@@ -170,7 +170,7 @@ console.log(randomColor()) // #7059c1
 > Use isArrayOfObjects to verify if all values inside of the array are objects
 
 ```js
-import { isArrayOfObjects } from '@secjs/core'
+import { isArrayOfObjects } from '@secjs/core/utils'
 
 const array1 = [1, 2, 3]
 const array2 = [{ foo: 'bar' }, 2, 'string']
@@ -190,7 +190,7 @@ console.log(isArrayOfObjects(fakeArray)) // false
 > Use urlify to inject some URL of a string inside a HTML Link
 
 ```js
-import { urlify } from '@secjs/core'
+import { urlify } from '@secjs/core/utils'
 
 const message = 'Link: https://google.com'
 
@@ -204,7 +204,7 @@ console.log(urlify(message)) // Link: <a href="https://google.com">https://googl
 > Use scheduler to execute some function based on MS
 
 ```js
-import { scheduler } from '@secjs/core'
+import { scheduler } from '@secjs/core/utils'
 
 const func = () => {
     console.log('Starting at...', new Date.toISOString())
@@ -220,7 +220,7 @@ scheduler(func, 3000) // scheduler function will execute the func every 3 second
 > Use fillable to return the array reduced by keys
 
 ```js
-import { fillable } from '@secjs/core'
+import { fillable } from '@secjs/core/utils'
 
 const object = {
   number1: 'good string',
@@ -239,7 +239,7 @@ console.log(readyToSaveOnDatabase) // { number1: 'good string' }
 > Use random to generate random strings by the length you want using crypto
 
 ```js
-import { random } from '@secjs/core'
+import { random } from '@secjs/core/utils'
 
 const randomStringWith10Chars = await random(10)
 
@@ -253,7 +253,7 @@ console.log(randomStringWith10Chars) // qwiortlkps
 > Use sleep to let you code sleep for sometime
 
 ```js
-import { sleep } from '@secjs/core'
+import { sleep } from '@secjs/core/utils'
 
 await sleep(2000) // Your code will stop in this line for two seconds
 ```
@@ -265,7 +265,7 @@ await sleep(2000) // Your code will stop in this line for two seconds
 > Use sort to get a sorted value from an array
 
 ```js
-import { sort } from '@secjs/core'
+import { sort } from '@secjs/core/utils'
 
 const array = ['a', 'b', 'c'] // Array length = 2 (0, 1, 2)
 const index = sort(array) // Sorted index value, could only be 0, 1 or 2
@@ -280,7 +280,7 @@ console.log(array[index]) // a, b or c
 > Use Numbers to manipulate numbers the best way
 
 ```js
-import { Numbers } from '@secjs/core'
+import { Numbers } from '@secjs/core/utils'
 
 const numbers = new Numbers()
 
@@ -303,7 +303,7 @@ console.log(numbers.arrayAverage(arrayOfNumbers)) // 3
 > Generate UUID tokens using a prefix, and validate it to using uuidv4 lib
 
 ```js
-import { Token } from '@secjs/core'
+import { Token } from '@secjs/core/utils'
 
 const token = new Token()
 
@@ -322,7 +322,7 @@ console.log(isUuid) // true
 > Use Parser to parse all type of data of you application
 
 ```js
-import { Parser } from '@secjs/core'
+import { Parser } from '@secjs/core/utils'
 
 const parser = new Parser()
 
@@ -352,7 +352,7 @@ console.log(parsed3) // &joao=joao&lenon=lenon
 > Use Clean to clean arrays and objects
 
 ```js
-import { Clean } from '@secjs/core'
+import { Clean } from '@secjs/core/utils'
 
 const clean = new Clean()
 
@@ -377,7 +377,7 @@ console.log(clean.cleanObject(object)) // { number1: "number", number4: 1 }
 > Find out what's the distance between a coordinate to other
 
 ```js
-import { kmRadius, ICoordinate } from '@secjs/core'
+import { kmRadius, ICoordinate } from '@secjs/core/utils'
 
 // Use type number for more precision,
 // but you can use string to,
@@ -404,7 +404,7 @@ console.log(distance) // The distance in Kilometers (KM)
 > Validate if is a valid CPF Document or not.
 
 ```js
-import { isCpf } from '@secjs/core'
+import { isCpf } from '@secjs/core/utils'
 
 // CPF (911.881.600-28) Generated using https://4devs.com.br
 
@@ -423,7 +423,7 @@ console.log(isCpf("000.000.000-00")) // false
 > Validate if is a valid CNPJ Document or not.
 
 ```js
-import { isCnpj } from '@secjs/core'
+import { isCnpj } from '@secjs/core/utils'
 
 // CNPJ (77.111.157/0001-19) Generated using https://4devs.com.br
 
