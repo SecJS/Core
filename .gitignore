@@ -11,3 +11,6 @@ build
 dist
 shrinkwrap.yaml
 package-lock.json
+
+*.js
+*.d.ts

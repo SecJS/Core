@@ -6,11 +6,7 @@ export function isCnpj(cnpj: string | number) {
   const primeiroCalculo = calcDigitosPosicoes(primeirosNumerosCnpj, 5)
   const segundoCalculo = calcDigitosPosicoes(primeiroCalculo, 6)
 
-  if (cnpj === segundoCalculo) {
-    return true
-  }
-
-  return false
+  return cnpj === segundoCalculo;
 }
 
 function calcDigitosPosicoes(digitos: any, posicoes = 10, somaDigitos = 0) {

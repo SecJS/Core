@@ -1,5 +1,5 @@
 import { BaseService } from './BaseService'
-import { GuardTypesContract } from '../../Contracts/GuardTypesContract'
+import { GuardTypesContract } from '../../contracts/GuardTypesContract'
 
 export class GuardBaseService<Guard extends GuardTypesContract> extends BaseService {
   private _guard: Guard | undefined

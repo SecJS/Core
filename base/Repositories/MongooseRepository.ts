@@ -4,7 +4,7 @@ import {
   IncludesContract,
   ApiRequestContract,
   PaginationContract,
-} from '../../Contracts'
+} from '../../contracts'
 import { Model, Document, isValidObjectId } from 'mongoose'
 
 export abstract class MongooseRepository<TModel extends Document> {

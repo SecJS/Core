@@ -1,4 +1,4 @@
-import { ApiRequestContract } from "../../Contracts"
+import { ApiRequestContract } from "../../contracts"
 
 export class BaseService {
   public async initRequest(data: ApiRequestContract) {
