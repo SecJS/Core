@@ -2,6 +2,10 @@
   "name": "@secjs/core",
   "version": "1.5.0",
   "license": "MIT",
+  "author": "João Lenon",
+  "repository": "https://github.com/SecJS/Core.git",
+  "bugs": "https://github.com/SecJS/Core/issues",
+  "homepage": "https://github.com/SecJS/Core#readme",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "yarn lint",
@@ -36,8 +40,6 @@
     "typescript": "^4.0.3",
     "uuid": "^8.3.1"
   },
-  "main": "build/",
-  "types": "build/",
-  "files": ["build", "LICENSE", "package.json", "README.md"],
+  "files": ["base", "utils", "contracts", "index.ts", "index.d.ts", "index.js"],
   "dependencies": {}
 }
