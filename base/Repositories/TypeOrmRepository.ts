@@ -124,7 +124,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
   }
 
-  async storeOne(body: TModel): Promise<TModel> {
+  async storeOne(body: any): Promise<TModel | any> {
     return this.save(this.create(body))
   }
 
