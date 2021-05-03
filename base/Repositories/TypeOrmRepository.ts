@@ -12,14 +12,14 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       return
     }
 
-    const { where, orderBy, includes } = data
+    const { where, orderBy, includes, isInternRequest = true } = data
 
     if (includes) {
-      this.factoryIncludes(Query, includes, alias)
+      this.factoryIncludes(Query, includes, alias, isInternRequest)
     }
 
     if (where) {
-      this.factoryWhere(Query, where, alias)
+      this.factoryWhere(Query, where, alias, isInternRequest)
     }
 
     if (orderBy) {
@@ -31,6 +31,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     query: SelectQueryBuilder<TModel>,
     where: WhereContract[],
     alias?: string,
+    isInternRequest?: boolean,
   ) {
     if (!alias) {
       alias = query.alias
@@ -40,7 +41,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       const key = Object.keys(w)[0]
       const value = w[key]
 
-      if (this.Model.where && !this.Model.where?.includes(key)) {
+      if (!isInternRequest && !this.Model.where?.includes(key)) {
         throw new Error('KEY_NOT_ALLOWED')
       }
 
@@ -97,13 +98,14 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     query: SelectQueryBuilder<TModel>,
     includes: IncludesContract[],
     alias?: string,
+    isInternRequest?: boolean,
   ) {
     if (!alias) {
       alias = query.alias
     }
 
     includes.map((include: IncludesContract) => {
-      if (this.Model.includes && !this.Model.includes?.includes(include.relation)) {
+      if (!isInternRequest && !this.Model.includes?.includes(include.relation)) {
         throw new Error('KEY_NOT_ALLOWED')
       }
 
