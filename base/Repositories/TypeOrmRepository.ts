@@ -36,20 +36,32 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       alias = query.alias
     }
 
-    where.map((w: WhereContract) => {
-      const value = w.value.toString()
+    where.forEach((w: WhereContract) => {
+      if (!w.value) {
+        query.andWhere(`${alias}.${w.key} IS NULL`)
+
+        return
+      }
 
       if (Array.isArray(w.value)) {
         query.andWhere(`${alias}.${w.key} ::jsonb @> :${w.key}`, {
           [w.key]: JSON.stringify(w.value),
         })
-      } else if (value.indexOf(',') > 0) {
+
+        return
+      }
+
+      const value = w.value.toString()
+
+      if (value.indexOf(',') > 0) {
         query.andWhere(`${alias}.${w.key} IN (:...${w.key})`, {
           [w.key]: new Parser().stringToArray(value),
         })
-      } else {
-        query.andWhere(`${alias}.${w.key} = '${w.value}'`)
+
+        return
       }
+
+      query.andWhere(`${alias}.${w.key} = '${w.value}'`)
     })
 
     return query
@@ -104,8 +116,8 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       limit = pagination.limit || 10
       offset = pagination.offset || 0
 
-      Query.skip(page || skip || offset)
-      Query.take(limit)
+      Query.skip(page || offset)
+      Query.take(limit || skip)
     }
 
     this.factoryRequest(Query, data)
