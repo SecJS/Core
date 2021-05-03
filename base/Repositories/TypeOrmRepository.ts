@@ -37,6 +37,10 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
 
     where.forEach((w: WhereContract) => {
+      if (!this.Model.where?.includes(w.key)) {
+        throw new Error('KEY_NOT_ALLOWED')
+      }
+
       if (!w.value) {
         query.andWhere(`${alias}.${w.key} IS NULL`)
 
@@ -93,6 +97,10 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
 
     includes.map((include: IncludesContract) => {
+      if (!this.Model.includes?.includes(include.relation)) {
+        throw new Error('KEY_NOT_ALLOWED')
+      }
+
       const includeAlias = `${include.relation}`.toLocaleUpperCase()
 
       query.leftJoinAndSelect(`${alias}.${include.relation}`, includeAlias)
