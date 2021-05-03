@@ -30,24 +30,27 @@ export abstract class MongooseRepository<TModel extends Document> {
     }
   }
 
-  private factoryWhere(query: any, where: WhereContract[]) {
-    where.map((w: WhereContract) => {
-      const key = Object.keys(w)[0]
-      const value = w[key]
+  private factoryWhere(query: any, where: WhereContract) {
+    Object.keys(where).forEach(key => {
+      const value = where[key]
 
       query.where(key, value)
     })
   }
 
-  private factoryOrderBy(query: any, orderBy: OrderByContract[]) {
-    orderBy.map((o: OrderByContract) => {
-      query.sort(o)
+  private factoryOrderBy(query: any, orderBy: OrderByContract) {
+    Object.keys(orderBy).forEach(key => {
+      const value = orderBy[key]
+
+      query.sort(key, value)
     })
   }
 
-  private factoryIncludes(query: any, includes: IncludesContract[]) {
-    includes.map((i: IncludesContract) => {
-      query.populate(i.relation)
+  private factoryIncludes(query: any, includes: IncludesContract) {
+    Object.keys(includes).forEach(key => {
+      const value = includes[key]
+
+      query.populate(value.relation)
     })
   }
 
@@ -102,7 +105,7 @@ export abstract class MongooseRepository<TModel extends Document> {
       }
     }
 
-    Object.keys(body).map(key => {
+    Object.keys(body).forEach(key => {
       model[key] = body[key]
     })
 

@@ -29,7 +29,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
   private factoryWhere(
     query: SelectQueryBuilder<TModel>,
-    where: WhereContract[],
+    where: WhereContract,
     alias?: string,
     isInternRequest?: boolean,
   ) {
@@ -37,9 +37,8 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       alias = query.alias
     }
 
-    where.forEach((w: WhereContract) => {
-      const key = Object.keys(w)[0]
-      const value = w[key]
+    Object.keys(where).forEach(key => {
+      const value = where[key]
 
       if (!isInternRequest && !this.Model.where?.includes(key)) {
         throw new Error('KEY_NOT_ALLOWED')
@@ -59,7 +58,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
         return
       }
 
-      const valueInString = w.value.toString()
+      const valueInString = value.toString()
 
       if (valueInString.indexOf(',') > 0) {
         query.andWhere(`${alias}.${key} IN (:...${key})`, {
@@ -77,16 +76,15 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
   private factoryOrderBy(
     query: SelectQueryBuilder<TModel>,
-    orderBy: OrderByContract[],
+    orderBy: OrderByContract,
     alias?: string,
   ) {
     if (!alias) {
       alias = query.alias
     }
 
-    orderBy.map((o: OrderByContract) => {
-      const key = Object.keys(o)[0]
-      const value = o[key]
+    Object.keys(orderBy).forEach(key => {
+      const value = orderBy[key]
 
       query.addOrderBy(`${alias}.${key}`, value)
     })
@@ -96,7 +94,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
   private factoryIncludes(
     query: SelectQueryBuilder<TModel>,
-    includes: IncludesContract[],
+    includes: IncludesContract,
     alias?: string,
     isInternRequest?: boolean,
   ) {
@@ -104,16 +102,18 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       alias = query.alias
     }
 
-    includes.map((include: IncludesContract) => {
-      if (!isInternRequest && !this.Model.includes?.includes(include.relation)) {
+    Object.keys(includes).forEach(key => {
+      const value = includes[key]
+
+      if (!isInternRequest && !this.Model.includes?.includes(value.relation)) {
         throw new Error('KEY_NOT_ALLOWED')
       }
 
-      const includeAlias = `${include.relation}`.toLocaleUpperCase()
+      const includeAlias = `${value.relation}`.toLocaleUpperCase()
 
-      query.leftJoinAndSelect(`${alias}.${include.relation}`, includeAlias)
+      query.leftJoinAndSelect(`${alias}.${value.relation}`, includeAlias)
 
-      this.factoryRequest(query, include, includeAlias)
+      this.factoryRequest(query, value, includeAlias)
     })
 
     return query
