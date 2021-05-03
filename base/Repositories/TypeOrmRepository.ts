@@ -37,7 +37,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
 
     where.forEach((w: WhereContract) => {
-      if (!this.Model.where?.includes(w.key)) {
+      if (this.Model.where && !this.Model.where?.includes(w.key)) {
         throw new Error('KEY_NOT_ALLOWED')
       }
 
@@ -97,7 +97,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
 
     includes.map((include: IncludesContract) => {
-      if (!this.Model.includes?.includes(include.relation)) {
+      if (this.Model.includes && !this.Model.includes?.includes(include.relation)) {
         throw new Error('KEY_NOT_ALLOWED')
       }
 
