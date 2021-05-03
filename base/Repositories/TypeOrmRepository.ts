@@ -165,4 +165,22 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
     return Query.getOne()
   }
+
+  async updateOne(id: string | any, body: any): Promise<TModel | any> {
+    let model = id
+
+    if (typeof id === 'string') {
+      model = this.getOne(id)
+    }
+
+    Object.keys(body).forEach((key) => {
+      model[key] = body[key]
+    })
+
+    return this.save(model)
+  }
+
+  async deleteOne(id: string | any): Promise<TModel | any> {
+    return this.updateOne(id, { deletedAt: new Date() })
+  }
 }
