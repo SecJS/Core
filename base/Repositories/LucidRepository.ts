@@ -41,12 +41,10 @@ export abstract class LucidRepository<TModel> {
     })
   }
 
-  private factoryIncludes(query: any, includes: IncludesContract) {
-    Object.keys(includes).forEach(key => {
-      const value = includes[key]
-
-      query.preload(value.relation, (includeQuery: any) => {
-        this.factoryRequest(includeQuery, value)
+  private factoryIncludes(query: any, includes: IncludesContract[]) {
+    includes.forEach(include => {
+      query.preload(include.relation, (includeQuery: any) => {
+        this.factoryRequest(includeQuery, include)
       })
     })
   }

@@ -2,14 +2,14 @@ export interface ApiRequestContract {
   isInternRequest?: boolean
   where?: WhereContract
   orderBy?: OrderByContract
-  includes?: IncludesContract
+  includes?: IncludesContract[]
 }
 
 export interface IncludesContract {
-  relation: any
+  relation?: any
   where?: WhereContract
   orderBy?: OrderByContract
-  includes?: IncludesContract
+  includes?: IncludesContract[]
 }
 
 export interface WhereContract {

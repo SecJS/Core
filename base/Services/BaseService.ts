@@ -7,11 +7,11 @@ export class BaseService {
     }
 
     if (!data.where) {
-      data.where = []
+      data.where = {}
     }
 
     if (!data.orderBy) {
-      data.orderBy = []
+      data.orderBy = {}
     }
 
     if (!data.includes) {

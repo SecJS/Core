@@ -94,7 +94,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
   private factoryIncludes(
     query: SelectQueryBuilder<TModel>,
-    includes: IncludesContract,
+    includes: IncludesContract[],
     alias?: string,
     isInternRequest?: boolean,
   ) {
@@ -102,18 +102,16 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       alias = query.alias
     }
 
-    Object.keys(includes).forEach(key => {
-      const value = includes[key]
-
-      if (!isInternRequest && !this.Model.includes?.includes(value.relation)) {
+    includes.forEach(include => {
+      if (!isInternRequest && !this.Model.includes?.includes(include.relation)) {
         throw new Error('KEY_NOT_ALLOWED')
       }
 
-      const includeAlias = `${value.relation}`.toLocaleUpperCase()
+      const includeAlias = `${include.relation}`.toLocaleUpperCase()
 
-      query.leftJoinAndSelect(`${alias}.${value.relation}`, includeAlias)
+      query.leftJoinAndSelect(`${alias}.${include.relation}`, includeAlias)
 
-      this.factoryRequest(query, value, includeAlias)
+      this.factoryRequest(query, include, includeAlias)
     })
 
     return query

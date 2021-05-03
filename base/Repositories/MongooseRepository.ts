@@ -46,11 +46,9 @@ export abstract class MongooseRepository<TModel extends Document> {
     })
   }
 
-  private factoryIncludes(query: any, includes: IncludesContract) {
-    Object.keys(includes).forEach(key => {
-      const value = includes[key]
-
-      query.populate(value.relation)
+  private factoryIncludes(query: any, includes: IncludesContract[]) {
+    includes.forEach(include => {
+      query.populate(include.relation)
     })
   }
 
