@@ -37,35 +37,38 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
 
     where.forEach((w: WhereContract) => {
-      if (this.Model.where && !this.Model.where?.includes(w.key)) {
+      const key = Object.keys(w)[0]
+      const value = w[key]
+
+      if (this.Model.where && !this.Model.where?.includes(key)) {
         throw new Error('KEY_NOT_ALLOWED')
       }
 
-      if (!w.value) {
-        query.andWhere(`${alias}.${w.key} IS NULL`)
+      if (!value) {
+        query.andWhere(`${alias}.${key} IS NULL`)
 
         return
       }
 
-      if (Array.isArray(w.value)) {
-        query.andWhere(`${alias}.${w.key} ::jsonb @> :${w.key}`, {
-          [w.key]: JSON.stringify(w.value),
+      if (Array.isArray(value)) {
+        query.andWhere(`${alias}.${key} ::jsonb @> :${key}`, {
+          [key]: JSON.stringify(value),
         })
 
         return
       }
 
-      const value = w.value.toString()
+      const valueInString = w.value.toString()
 
-      if (value.indexOf(',') > 0) {
-        query.andWhere(`${alias}.${w.key} IN (:...${w.key})`, {
-          [w.key]: new Parser().stringToArray(value),
+      if (valueInString.indexOf(',') > 0) {
+        query.andWhere(`${alias}.${key} IN (:...${key})`, {
+          [key]: new Parser().stringToArray(valueInString),
         })
 
         return
       }
 
-      query.andWhere(`${alias}.${w.key} = '${w.value}'`)
+      query.andWhere(`${alias}.${key} = '${value}'`)
     })
 
     return query
@@ -81,7 +84,10 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
 
     orderBy.map((o: OrderByContract) => {
-      query.addOrderBy(`${alias}.${o.key}`, o.ordenation)
+      const key = Object.keys(o)[0]
+      const value = o[key]
+
+      query.addOrderBy(`${alias}.${key}`, value)
     })
 
     return query

@@ -27,13 +27,19 @@ export abstract class LucidRepository<TModel> {
 
   private factoryWhere(query: any, where: WhereContract[]) {
     where.map((w: WhereContract) => {
-      query.where(w.key, w.value)
+      const key = Object.keys(w)[0]
+      const value = w[key]
+
+      query.where(key, value)
     })
   }
 
   private factoryOrderBy(query: any, orderBy: OrderByContract[]) {
     orderBy.map((o: OrderByContract) => {
-      query.orderBy(o.key, o.ordenation)
+      const key = Object.keys(o)[0]
+      const value = o[key]
+
+      query.orderBy(key, value)
     })
   }
 

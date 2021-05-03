@@ -32,13 +32,16 @@ export abstract class MongooseRepository<TModel extends Document> {
 
   private factoryWhere(query: any, where: WhereContract[]) {
     where.map((w: WhereContract) => {
-      query.where(w.key, w.value)
+      const key = Object.keys(w)[0]
+      const value = w[key]
+
+      query.where(key, value)
     })
   }
 
   private factoryOrderBy(query: any, orderBy: OrderByContract[]) {
     orderBy.map((o: OrderByContract) => {
-      query.sort({ [o.key]: o.ordenation })
+      query.sort(o)
     })
   }
 
