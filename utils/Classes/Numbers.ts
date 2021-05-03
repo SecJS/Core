@@ -11,7 +11,7 @@ export class Numbers {
     return string ? string.replace(/\D/g, '') : string
   }
 
-  argsAverage(...args: any) {
+  argsAverage(...args: any[]) {
     return args.reduce((acc: any, curr: any) => acc + curr, 0) / args.length
   }
 

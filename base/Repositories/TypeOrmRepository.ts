@@ -41,7 +41,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
       const value = where[key]
 
       if (!isInternRequest && !this.Model.where?.includes(key)) {
-        throw new Error('KEY_NOT_ALLOWED')
+        throw new Error(`According to ${this.Model.constructor.name} model, it is not possible to filter by ${key}`)
       }
 
       if (!value) {
@@ -104,7 +104,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
     includes.forEach(include => {
       if (!isInternRequest && !this.Model.includes?.includes(include.relation)) {
-        throw new Error('KEY_NOT_ALLOWED')
+        throw new Error(`According to ${this.Model.constructor.name} model, it is not possible to include ${include.relation}`)
       }
 
       const includeAlias = `${include.relation}`.toLocaleUpperCase()
