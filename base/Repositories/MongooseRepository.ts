@@ -69,22 +69,20 @@ export abstract class MongooseRepository<TModel extends Document> {
   }
 
   async getAll(
-    pagination: PaginationContract,
+    pagination?: PaginationContract,
     data?: ApiRequestContract,
   ): Promise<any> {
     const query = this.Model.find()
 
-    if (pagination.limit) {
-      query.skip(pagination.page || pagination.offset || pagination.skip).limit(pagination.limit)
+    if (pagination) {
+      query.skip(pagination.page || pagination.offset || pagination.skip || 0).limit(pagination.limit || 10)
     }
 
     this.factoryRequest(query, data)
 
-    pagination.total = await this.Model.countDocuments()
-
     return {
       data: await query.exec(),
-      pagination,
+      pagination: pagination ? { ...pagination, total: await this.Model.countDocuments() } : { total: await this.Model.countDocuments() }
     }
   }
 

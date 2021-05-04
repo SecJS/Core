@@ -61,11 +61,11 @@ export abstract class LucidRepository<TModel> {
     return Query.first()
   }
 
-  async getAll(pagination: PaginationContract, data?: ApiRequestContract): Promise<TModel[]> {
+  async getAll(pagination?: PaginationContract, data?: ApiRequestContract): Promise<TModel[]> {
     const Query = this.Model.query()
 
-    if (pagination.page && pagination.limit) {
-      Query.paginate(pagination.page, pagination.limit)
+    if (pagination) {
+      Query.paginate(pagination.page || 0, pagination.limit || 10)
     }
 
     this.factoryRequest(Query, data)
