@@ -117,21 +117,12 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return query
   }
 
-  async getAll(pagination: PaginationContract, data?: ApiRequestContract): Promise<PaginatedResponse<TModel>> {
+  async getAll(pagination?: PaginationContract, data?: ApiRequestContract): Promise<PaginatedResponse<TModel>> {
     const Query = this.createQueryBuilder(this.Model)
 
-    let page = 0
-    let skip = 0
-    let limit = 0
-    let offset = 0
-
-    if (pagination.limit) {
-      page = pagination.page || 0
-      limit = pagination.limit || 10
-      offset = pagination.offset || 0
-
-      Query.skip(page || offset)
-      Query.take(limit || skip)
+    if (pagination) {
+      Query.skip(pagination.page || pagination.offset || pagination.skip || 0)
+      Query.take(pagination.limit || pagination.skip || 10)
     }
 
     this.factoryRequest(Query, data)
@@ -140,13 +131,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
     return {
       data: returnData[0],
-      pagination: {
-        page,
-        skip,
-        offset,
-        limit,
-        total: returnData[1]
-      },
+      pagination: pagination ? { ...pagination, total: returnData[1] } : { total: returnData[1] }
     }
   }
 
@@ -154,7 +139,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return this.save(this.create(body))
   }
 
-  async getOne(id?: string | null, data?: ApiRequestContract): Promise<TModel | undefined> {
+  async getOne(id?: string | number | null, data?: ApiRequestContract): Promise<TModel | undefined> {
     const Query = this.createQueryBuilder()
 
     if (id) {
@@ -166,11 +151,11 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return Query.getOne()
   }
 
-  async updateOne(id: string | any, body: any): Promise<TModel | any> {
+  async updateOne(id: string | number | any, body: any): Promise<TModel | any> {
     let model = id
 
-    if (typeof id === 'string') {
-      model = this.getOne(id)
+    if (typeof id === 'string' || typeof id === 'number') {
+      model = await this.getOne(id)
     }
 
     Object.keys(body).forEach((key) => {
@@ -180,7 +165,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return this.save(model)
   }
 
-  async deleteOne(id: string | any): Promise<TModel | any> {
+  async deleteOne(id: string | number | any): Promise<TModel | any> {
     return this.updateOne(id, { deletedAt: new Date() })
   }
 }

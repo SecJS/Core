@@ -1,7 +1,7 @@
 export interface PaginationContract {
-  page: number
-  offset: number
-  skip: number
-  limit: number
+  page?: number
+  offset?: number
+  skip?: number
+  limit?: number
   total?: number
 }
