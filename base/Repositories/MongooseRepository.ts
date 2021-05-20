@@ -6,6 +6,7 @@ import {
   PaginationContract,
 } from '../../contracts'
 import { Model, Document, isValidObjectId } from 'mongoose'
+import { paginate } from '../../utils/Functions/paginate'
 
 export abstract class MongooseRepository<TModel extends Document> {
   protected abstract Model: Model<TModel>
@@ -75,15 +76,12 @@ export abstract class MongooseRepository<TModel extends Document> {
     const query = this.Model.find()
 
     if (pagination) {
-      query.skip(pagination.page || pagination.offset || pagination.skip || 0).limit(pagination.limit || 10)
+      query.skip(pagination.page || 0).limit(pagination.limit || 10)
     }
 
     this.factoryRequest(query, data)
 
-    return {
-      data: await query.exec(),
-      pagination: pagination ? { ...pagination, total: await this.Model.countDocuments() } : { total: await this.Model.countDocuments() }
-    }
+    return paginate(await query.exec(), await query.countDocuments(), pagination || { page: 0, limit: 10 })
   }
 
   async storeOne(body: any): Promise<TModel> {

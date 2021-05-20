@@ -215,6 +215,50 @@ scheduler(func, 3000) // scheduler function will execute the func every 3 second
 
 ---
 
+### paginate
+
+> Use paginate get meta and links from for response
+
+```js
+import { paginate } from '@secjs/core/utils'
+import { PaginationContract } from '@secjs/core/contracts'
+
+const filters = {
+  where: { id: 1 }
+}
+
+const pagination: PaginationContract = {
+  page: 1,
+  limit: 10,
+  resourceUrl: 'https://test/users'
+}
+
+const array = this.repository.getAll(pagination, filters)
+const total = this.repository.count(filters)
+
+console.log(paginate(array, total, pagination)) 
+
+// { 
+//    data: [{ id: 1, name: 'João Lenon' }], 
+//    meta: {
+//      itemCount: 1,
+//      totalItems: 1, 
+//      totalPages: 1,
+//      currentPage: 0,
+//      itemsPerPage: 10,
+//    }, 
+//    links: {
+//      first: 'https://test/users?limit=10',
+//      previous: 'https://test/users?page=0&limit=10',
+//      next: 'https://test/users?page=2&limit=10',
+//      last: 'https://test/users?page=1&limit=10',
+//   } 
+// }
+
+```
+
+---
+
 ### fillable
 
 > Use fillable to return the array reduced by keys
@@ -343,6 +387,31 @@ const object = {
 const parsed3 = parser.jsonToFormData(object)
 
 console.log(parsed3) // &joao=joao&lenon=lenon
+```
+
+---
+
+### Clean
+
+> Use Clean to clean arrays and objects
+
+```js
+import { Clean } from '@secjs/core/utils'
+
+const clean = new Clean()
+
+const array = [null, undefined, 1, "number"]
+
+console.log(clean.cleanArray(array)) // [1, "number"]
+
+const object = {
+  number1: "number",
+  number2: null,
+  number3: undefined,
+  number4: 1,
+}
+
+console.log(clean.cleanObject(object)) // { number1: "number", number4: 1 }
 ```
 
 ---

@@ -1,4 +1,4 @@
-import { PaginationContract } from './PaginationContract'
+import { PaginationLinksContract, PaginationMetaContract } from './PaginationContract'
 
 export interface ApiResponseContract {
   code: string
@@ -10,7 +10,8 @@ export interface ApiResponseContract {
 
 export interface PaginatedResponse<TModel> {
   data: TModel[]
-  pagination: PaginationContract
+  meta: PaginationMetaContract
+  links: PaginationLinksContract
 }
 
 

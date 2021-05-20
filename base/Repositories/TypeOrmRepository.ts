@@ -1,18 +1,21 @@
 import { Parser } from '../../utils/Classes/Parser'
 import { Repository, SelectQueryBuilder } from 'typeorm'
+import { paginate } from '../../utils/Functions/paginate'
 import { PaginatedResponse } from '../../contracts/ApiResponseContract'
 import { PaginationContract } from '../../contracts/PaginationContract'
 import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from '../../contracts/ApiRequestContract'
 
 export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
   protected abstract Model: any
+  protected abstract wheres: any[]
+  protected abstract relations: any[]
 
-  private factoryRequest(Query: SelectQueryBuilder<TModel>, data?: ApiRequestContract, alias?: string) {
-    if (!data) {
+  private factoryRequest(Query: SelectQueryBuilder<TModel>, options?: ApiRequestContract, alias?: string) {
+    if (!options) {
       return
     }
 
-    const { where, orderBy, includes, isInternRequest = true } = data
+    const { where, orderBy, includes, isInternRequest = true } = options
 
     if (includes) {
       this.factoryIncludes(Query, includes, alias, isInternRequest)
@@ -40,7 +43,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     Object.keys(where).forEach(key => {
       const value = where[key]
 
-      if (!isInternRequest && !this.Model.where?.includes(key)) {
+      if (!isInternRequest && !this.wheres?.includes(key)) {
         throw new Error(`According to ${this.Model.constructor.name} model, it is not possible to filter by ${key}`)
       }
 
@@ -103,7 +106,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     }
 
     includes.forEach(include => {
-      if (!isInternRequest && !this.Model.includes?.includes(include.relation)) {
+      if (!isInternRequest && !this.relations?.includes(include.relation)) {
         throw new Error(`According to ${this.Model.constructor.name} model, it is not possible to include ${include.relation}`)
       }
 
@@ -117,36 +120,36 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return query
   }
 
-  async getAll(pagination?: PaginationContract, data?: ApiRequestContract): Promise<PaginatedResponse<TModel>> {
+  async getAll(pagination?: PaginationContract, options?: ApiRequestContract): Promise<PaginatedResponse<TModel>> {
     const Query = this.createQueryBuilder(this.Model)
 
     if (pagination) {
-      Query.skip(pagination.page || pagination.offset || pagination.skip || 0)
-      Query.take(pagination.limit || pagination.skip || 10)
+      Query.skip(pagination.page || 0)
+      Query.take(pagination.limit || 10)
     }
 
-    this.factoryRequest(Query, data)
+    this.factoryRequest(Query, options)
 
     const returnData = await Query.getManyAndCount()
 
-    return {
-      data: returnData[0],
-      pagination: pagination ? { ...pagination, total: returnData[1] } : { total: returnData[1] }
-    }
+    const data = returnData[0]
+    const total = returnData[1]
+
+    return paginate(data, total, pagination || { page: 0, limit: 10 })
   }
 
   async storeOne(body: any): Promise<TModel | any> {
     return this.save(this.create(body))
   }
 
-  async getOne(id?: string | number | null, data?: ApiRequestContract): Promise<TModel | undefined> {
+  async getOne(id?: string | number | null, options?: ApiRequestContract): Promise<TModel | undefined> {
     const Query = this.createQueryBuilder()
 
     if (id) {
       Query.where({ id })
     }
 
-    this.factoryRequest(Query, data)
+    this.factoryRequest(Query, options)
 
     return Query.getOne()
   }
