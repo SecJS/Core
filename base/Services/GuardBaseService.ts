@@ -1,6 +1,13 @@
 import { BaseService } from './BaseService'
 
-export class GuardBaseService<T> extends BaseService<T> {
+interface IGuard {
+  id?: string | number
+  status?: string
+  deletedAt?: string | Date
+  user?: any
+}
+
+export class GuardBaseService<T extends IGuard> extends BaseService<T> {
   private _guard: T | undefined
 
   /**

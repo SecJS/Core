@@ -1,20 +1,18 @@
-import { ApiRequestContract } from "../../contracts"
-
-export class BaseService<T extends object> {
+export class BaseService<T extends Record<string, any>> {
   /**
    * Creates a new instance of the given entity
    *
    * @param create Properties of the instance to create.
    * @return The entity instance to be created
    */
-  async setDataCreate(create: any): Promise<T> {
-    const model = {};
+  setDataCreate(create: any): T {
+    const model: Record<string, any> = {}
 
     Object.entries(create).forEach(([key, value]) => {
       model[key] = value;
     });
 
-    return model as T;
+    return model as T
   }
 
   /**
@@ -24,11 +22,12 @@ export class BaseService<T extends object> {
    * @param update Properties to apply as update.
    * @return The updated entity instance
    */
-  async setDataUpdate(model: T, update: any): Promise<T> {
+  setDataUpdate(model: T, update: any): T {
     Object.entries(update).forEach(([key, value]) => {
-      model[key] = value;
-    });
+      // @ts-ignore
+      model[key] = value
+    })
 
-    return model;
+    return model
   }
 }
