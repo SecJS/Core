@@ -1,6 +1,6 @@
 import { PaginatedResponse } from '../../contracts'
 
-export async function paginate(data: any[], total: number, pagination: any): Promise<PaginatedResponse<any>> {
+export function paginate(data: any[], total: number, pagination: any): PaginatedResponse<any> {
   const totalPages = Math.ceil(total / pagination.limit)
 
   const meta = {

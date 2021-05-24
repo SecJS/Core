@@ -3,7 +3,7 @@ import {
   OrderByContract,
   IncludesContract,
   ApiRequestContract,
-  PaginationContract,
+  PaginationContract, PaginatedResponse,
 } from '../../contracts'
 import { Model, Document, isValidObjectId } from 'mongoose'
 import { paginate } from '../../utils/Functions/paginate'
@@ -11,12 +11,12 @@ import { paginate } from '../../utils/Functions/paginate'
 export abstract class MongooseRepository<TModel extends Document> {
   protected abstract Model: Model<TModel>
 
-  private factoryRequest(query: any, data?: ApiRequestContract) {
-    if (!data) {
+  private factoryRequest(query: any, options?: ApiRequestContract) {
+    if (!options) {
       return
     }
 
-    const { where, orderBy, includes } = data
+    const { where, orderBy, includes } = options
 
     if (where) {
       this.factoryWhere(query, where)
@@ -53,7 +53,15 @@ export abstract class MongooseRepository<TModel extends Document> {
     })
   }
 
-  async getOne(id?: string, data?: ApiRequestContract): Promise<TModel | null> {
+  /**
+   * Retrieves one data from Database
+   *
+   * @param id The id of the model
+   * @param options The options used to filter data
+   * @return The model founded or null
+   * @throws Error when id is not a valid ObjectId
+   */
+  async getOne(id?: string, options?: ApiRequestContract): Promise<TModel | null> {
     const query = this.Model.findOne()
 
     if (id) {
@@ -64,30 +72,51 @@ export abstract class MongooseRepository<TModel extends Document> {
       query.where('_id', id)
     }
 
-    this.factoryRequest(query, data)
+    this.factoryRequest(query, options)
 
     return query.exec()
   }
 
+  /**
+   * Retrieves multiple data from Database
+   *
+   * @param pagination The pagination used to paginate data
+   * @param options The options used to filter data
+   * @return The paginated response with models retrieved
+   */
   async getAll(
     pagination?: PaginationContract,
-    data?: ApiRequestContract,
-  ): Promise<any> {
+    options?: ApiRequestContract,
+  ): Promise<PaginatedResponse<TModel>> {
     const query = this.Model.find()
 
     if (pagination) {
       query.skip(pagination.page || 0).limit(pagination.limit || 10)
     }
 
-    this.factoryRequest(query, data)
+    this.factoryRequest(query, options)
 
     return paginate(await query.exec(), await query.countDocuments(), pagination || { page: 0, limit: 10 })
   }
 
+  /**
+   * Store one in database
+   *
+   * @param body The body that is going to be used to create
+   * @return The model created with body information
+   */
   async storeOne(body: any): Promise<TModel> {
     return new this.Model(body).save()
   }
 
+  /**
+   * Update one from database
+   *
+   * @param id The id or model that is going to be updated
+   * @param body The body that is going to be used to update
+   * @return The model updated with body information
+   * @throws Error if cannot find model with ID
+   */
   async updateOne(id: any, body: any): Promise<TModel> {
     let model = id
 
@@ -106,7 +135,15 @@ export abstract class MongooseRepository<TModel extends Document> {
     return model.save()
   }
 
-  async deleteOne(id: any): Promise<TModel> {
+  /**
+   * Delete one from database
+   *
+   * @param id The id or model that is going to be deleted
+   * @param soft If is a soft delete or a true delete from database
+   * @return The model soft deleted or void if deleted
+   * @throws Error if cannot find model with ID
+   */
+  async deleteOne(id: any, soft = true): Promise<TModel | void> {
     let model = id
 
     if (typeof id === 'string') {
@@ -117,8 +154,12 @@ export abstract class MongooseRepository<TModel extends Document> {
       }
     }
 
-    model.deletedAt = new Date()
+    if (soft) {
+      model.deletedAt = new Date()
 
-    return model.save()
+      return model.save()
+    }
+
+    await model.deleteOne()
   }
 }

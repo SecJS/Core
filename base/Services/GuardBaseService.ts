@@ -1,10 +1,15 @@
 import { BaseService } from './BaseService'
-import { GuardTypesContract } from '../../contracts/GuardTypesContract'
 
-export class GuardBaseService<Guard extends GuardTypesContract> extends BaseService {
-  private _guard: Guard | undefined
+export class GuardBaseService<T> extends BaseService<T> {
+  private _guard: T | undefined
 
-  get guard(): Guard {
+  /**
+   * Retrieves guard or throw exception
+   *
+   * @throws throws exception if there is any guard set
+   * @return The guard property with user information
+   */
+  get guard(): T {
     if (!this._guard) {
       throw new Error('GUARD_UNSET')
     }
@@ -12,7 +17,13 @@ export class GuardBaseService<Guard extends GuardTypesContract> extends BaseServ
     return this._guard
   }
 
-  setGuard(guard: Guard) {
+  /**
+   * Set the guard of all service methods
+   *
+   * @param guard The guardian that is going to be set
+   * @return The GuardBaseService property to execute other methods
+   */
+  setGuard(guard: T) {
     this._guard = guard
 
     if (guard.id) {

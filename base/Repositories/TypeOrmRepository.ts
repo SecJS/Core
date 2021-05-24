@@ -120,6 +120,13 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return query
   }
 
+  /**
+   * Retrieves multiple data from Database
+   *
+   * @param pagination The pagination used to paginate data
+   * @param options The options used to filter data
+   * @return The paginated response with models retrieved
+   */
   async getAll(pagination?: PaginationContract, options?: ApiRequestContract): Promise<PaginatedResponse<TModel>> {
     const Query = this.createQueryBuilder(this.Model)
 
@@ -138,10 +145,23 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return paginate(data, total, pagination || { page: 0, limit: 10 })
   }
 
+  /**
+   * Store one in database
+   *
+   * @param body The body that is going to be used to store
+   * @return The model created with body information
+   */
   async storeOne(body: any): Promise<TModel | any> {
     return this.save(this.create(body))
   }
 
+  /**
+   * Retrieves one data from Database
+   *
+   * @param id The id of the model
+   * @param options The options used to filter data
+   * @return The model founded or undefined
+   */
   async getOne(id?: string | number | null, options?: ApiRequestContract): Promise<TModel | undefined> {
     const Query = this.createQueryBuilder()
 
@@ -154,11 +174,23 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return Query.getOne()
   }
 
+  /**
+   * Update one from database
+   *
+   * @param id The id or model that is going to be updated
+   * @param body The body that is going to be used to update
+   * @return The model updated with body information
+   * @throws Error if cannot find model with ID
+   */
   async updateOne(id: string | number | any, body: any): Promise<TModel | any> {
     let model = id
 
     if (typeof id === 'string' || typeof id === 'number') {
       model = await this.getOne(id)
+
+      if (!model) {
+        throw new Error('MODEL_NOT_FOUND_UPDATE')
+      }
     }
 
     Object.keys(body).forEach((key) => {
@@ -168,7 +200,29 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
     return this.save(model)
   }
 
-  async deleteOne(id: string | number | any): Promise<TModel | any> {
-    return this.updateOne(id, { deletedAt: new Date() })
+  /**
+   * Delete one from database
+   *
+   * @param id The id or model that is going to be deleted
+   * @param soft If is a soft delete or a true delete from database
+   * @return The model soft deleted or void if deleted
+   * @throws Error if cannot find model with ID
+   */
+  async deleteOne(id: string | number | any, soft = true): Promise<TModel | void> {
+    let model = id
+
+    if (typeof id === 'string' || typeof id === 'number') {
+      model = await this.getOne(id)
+
+      if (!model) {
+        throw new Error('MODEL_NOT_FOUND_DELETE')
+      }
+    }
+
+    if (soft) {
+      return this.updateOne(id, { deletedAt: new Date() })
+    }
+
+    await model.delete()
   }
 }

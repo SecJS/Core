@@ -334,9 +334,10 @@ const stringNumber = "Hello my name is João, I'm 20 year old!"
 console.log(numbers.getLower(arrayOfNumbers)) // 2
 console.log(numbers.getHigher(arrayOfNumbers)) // 4
 
-console.log(numbers.extractNumbers(stringNumber)) // [20]
+console.log(numbers.extractNumber(stringNumber)) // '20'
+console.log(numbers.extractNumbers(stringNumber)) // ['20']
 
-console.log(numbers.argsAverage(10, 10)) // 10
+console.log(numbers.argsAverage(2, 4)) // 3
 console.log(numbers.arrayAverage(arrayOfNumbers)) // 3
 ```
 
@@ -385,8 +386,10 @@ const object = {
   lenon: 'lenon',
 }
 const parsed3 = parser.jsonToFormData(object)
+const parsed4 = parser.jsonToQueryString(object)
 
 console.log(parsed3) // &joao=joao&lenon=lenon
+console.log(parsed4) // ?joao=joao&lenon=lenon
 ```
 
 ---
