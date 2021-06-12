@@ -1,9 +1,13 @@
-import { Parser } from '../../utils/Classes/Parser'
+import {
+  ApiRequestContract,
+  IncludesContract,
+  OrderByContract,
+  WhereContract,
+  PaginationContract,
+  PaginatedResponse,
+} from '@secjs/contracts'
+import { Parser, paginate } from '@secjs/utils'
 import { Repository, SelectQueryBuilder } from 'typeorm'
-import { paginate } from '../../utils/Functions/paginate'
-import { PaginatedResponse } from '../../contracts/ApiResponseContract'
-import { PaginationContract } from '../../contracts/PaginationContract'
-import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from '../../contracts/ApiRequestContract'
 
 export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
   protected abstract Model: any
@@ -65,7 +69,7 @@ export abstract class TypeOrmRepository<TModel> extends Repository<TModel> {
 
       if (valueInString.indexOf(',') > 0) {
         query.andWhere(`${alias}.${key} IN (:...${key})`, {
-          [key]: new Parser().stringToArray(valueInString),
+          [key]: new Parser().stringToArray(valueInString, ','),
         })
 
         return

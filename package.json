@@ -1,6 +1,6 @@
 {
   "name": "@secjs/core",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "license": "MIT",
   "author": "João Lenon",
   "repository": "https://github.com/SecJS/Core.git",
@@ -29,8 +29,9 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
-    "husky": "^3.0.9",
     "express": "^4.17.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.3",
     "luxon": "^1.25.0",
     "mongoose": "^5.11.15",
     "mrm": "^2.2.1",
@@ -38,7 +39,6 @@
     "reflect-metadata": "^0.1.13",
     "ts-node": "^8.9.0",
     "typeorm": "^0.2.29",
-    "lint-staged": "^9.4.3",
     "typescript": "^4.0.3",
     "uuid": "^8.3.1"
   },
@@ -98,6 +98,16 @@
       "camelcase": "off"
     }
   },
-  "files": ["base", "utils", "contracts", "index.ts", "index.d.ts", "index.js"],
-  "dependencies": {}
+  "files": [
+    "base",
+    "utils",
+    "contracts",
+    "index.ts",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@secjs/contracts": "^1.0.1",
+    "@secjs/utils": "^1.1.0"
+  }
 }

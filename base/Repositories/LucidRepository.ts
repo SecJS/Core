@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
-import { PaginationContract } from '../../contracts/PaginationContract'
-import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract } from '../../contracts/ApiRequestContract'
+import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract, PaginationContract } from '@secjs/contracts'
 
 export abstract class LucidRepository<TModel> {
   protected abstract Model: TModel | any
