@@ -1,6 +1,6 @@
 import { paginate } from '@secjs/utils'
 import { Model, Document, isValidObjectId } from 'mongoose'
-import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract, PaginationContract } from '@secjs/contracts'
+import { ApiRequestContract, IncludesContract, OrderByContract, WhereContract, PaginationContract, PaginatedResponse } from '@secjs/contracts'
 
 export abstract class MongooseRepository<TModel extends Document> {
   protected abstract Model: Model<TModel>
