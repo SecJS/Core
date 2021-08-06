@@ -84,4 +84,6 @@ class TestController {
 
 ---
 
+## License
+
 Made with 🖤 by [jlenon7](https://github.com/jlenon7) :wave:
