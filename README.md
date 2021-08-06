@@ -1,6 +1,6 @@
 # Core 🧠
 
-> Core stuffs to any NodeJS project
+> Core stuffs to your NodeJS project
 
 [![GitHub followers](https://img.shields.io/github/followers/jlenon7.svg?style=social&label=Follow&maxAge=2592000)](https://github.com/jlenon7?tab=followers)
 [![GitHub stars](https://img.shields.io/github/stars/secjs/core.svg?style=social&label=Star&maxAge=2592000)](https://github.com/secjs/core/stargazers/)
@@ -13,73 +13,73 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge&logo=appveyor">
 </p>
 
-The intention behind this repository is to always maintain an `Core` project to any NodeJS project.
+The intention behind this repository is to concentrate all `SecJS` libraries to create an HTTP server to any NodeJS project.
 
 <img src=".github/core.jpg" width="200px" align="right" hspace="30px" vspace="100px">
 
+## WARN 🛑⚠️
+
+> This project is under `development` do not use it until releases v2.0.0.
+
 ## Installation
+
+This project depends on [`@secjs/utils`]('https://github.com/SecJS/Utils')
+
+```bash
+yarn add @secjs/utils
+```
+
+Then install the project
 
 ```bash
 yarn add @secjs/core
 ```
 
-## Base
+## Decorators
 
-### GuardBaseService
+### Controller
 
-```js
-import { User } from 'app/Models/User'
-import { GuardBaseService } from '@secjs/core/base'
+> Use `Controller` decorator to map a controller to your application
 
-class ContactService extends GuardBaseService<User> { 
-  // You new to write all you methods in here, GuardBaseService
-  // just makes sure it's an authenticated request and save the
-  // Guard/User in the context of the service.
+```ts
+import { Controller } from '@secjs/core'
 
-  async getOne(id) {
-    const contact = // ... all the logic to get an Contact
-
-    // If you use User as guard, you can access this.guard.user.id or this.guard.id
-    if (contact.user_id !== this.guard.user.id) {
-      throw new Error('Unauthorized')
-    }
-
-    return contact
-  }
-}
+@Controller('/tests')
+class TestController {}
 ```
 
----
+### Request Mappers - GET/POST/PUT/DELETE/ETC...
 
-### LucidBaseRepository
+> Use `GET, POST, PUT, DELETE, PATCH, ALL, OPTIONS, HEAD` decorators to map the real route for your application
 
-> Use LucidBaseRepository to get nice methods based on ApiRequestContract
+```ts
+import { Get, Post, Put, Delete } from '@secjs/core'
 
-```js
-import { User } from 'app/Models/User'
-import { LucidBaseRepository } from '@secjs/core/base'
+@Controller('/tests')
+class TestController {
+    @Get()
+    async getAll() {}
+    
+    @Get('/:id')
+    async getOne() {}
 
-class UserRepository extends LucidBaseRepository<User> { // Just for types
-  protected Model = User // Give the Model value to Lucid, so he knows what to work with
-  
-  // You can subscribe LucidBaseRepository methods in here if you want!  
+    @Post()
+    async create() {}
+
+    @Put(':id')
+    async update() {}
+
+    @Delete('/:id')
+    async delete() {}
 }
-```
 
----
-
-### TypeOrmBaseRepository
-
-> Use TypeOrmBaseRepository to get nice methods based on ApiRequestContract
-
-```js
-import { User } from 'app/Models/User'
-import { TypeOrmBaseRepository } from '@secjs/core/base'
-
-class UserRepository extends TypeOrmBaseRepository<User> { // Give the Model type to TypeOrm so he knows what to work with
-
-  // You can subscribe TypeOrmBaseRepository methods in here if you want!  
-}
+// Routes created: 
+// 
+// /tests GET
+// /tests/:id GET
+// /tests POST
+// /tests/:id PUT
+// /tests/:id DELETE
 ```
 
 ---
