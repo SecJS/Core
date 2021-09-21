@@ -1,7 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment,@typescript-eslint/no-empty-function */
+// @ts-nocheck
+
 import 'reflect-metadata'
 
 import { Controller } from '../../../src/Decorators/Http/Controller'
-import { Get, Post, Put, Delete } from '../../../src/Decorators/Http/RequestMapping'
+import {
+  Get,
+  Post,
+  Put,
+  Delete,
+} from '../../../src/Decorators/Http/RequestMapping'
 
 describe('\n Request Mapping Decorators', () => {
   it('should be able to create a controller with routes inside', async () => {
@@ -20,12 +28,16 @@ describe('\n Request Mapping Decorators', () => {
       async delete() {}
     }
 
-    expect(Reflect.getMetadata('controller:path', TestController)).toStrictEqual(['/'])
-    expect(Reflect.getMetadata('controller:routes', TestController)).toStrictEqual([
-      {path: '/', method: 0},
-      {path: '/', method: 1},
-      {path: '/', method: 2},
-      {path: '/', method: 3},
+    expect(
+      Reflect.getMetadata('controller:path', TestController),
+    ).toStrictEqual(['/'])
+    expect(
+      Reflect.getMetadata('controller:routes', TestController),
+    ).toStrictEqual([
+      { path: '/', method: 0 },
+      { path: '/', method: 1 },
+      { path: '/', method: 2 },
+      { path: '/', method: 3 },
     ])
   })
 
@@ -45,12 +57,16 @@ describe('\n Request Mapping Decorators', () => {
       async delete() {}
     }
 
-    expect(Reflect.getMetadata('controller:path', TestController)).toStrictEqual(['/api/v1'])
-    expect(Reflect.getMetadata('controller:routes', TestController)).toStrictEqual([
-      {path: '/api/v1/tests', method: 0},
-      {path: '/api/v1/tests', method: 1},
-      {path: '/api/v1/tests/:id', method: 2},
-      {path: '/api/v1/tests/:id', method: 3},
+    expect(
+      Reflect.getMetadata('controller:path', TestController),
+    ).toStrictEqual(['/api/v1'])
+    expect(
+      Reflect.getMetadata('controller:routes', TestController),
+    ).toStrictEqual([
+      { path: '/api/v1/tests', method: 0 },
+      { path: '/api/v1/tests', method: 1 },
+      { path: '/api/v1/tests/:id', method: 2 },
+      { path: '/api/v1/tests/:id', method: 3 },
     ])
   })
 
@@ -61,12 +77,16 @@ describe('\n Request Mapping Decorators', () => {
       async get() {}
     }
 
-    expect(Reflect.getMetadata('controller:path', TestController)).toStrictEqual(['/api/v1', '/api/v2'])
-    expect(Reflect.getMetadata('controller:routes', TestController)).toStrictEqual([
-      {path: '/api/v1/tests', method: 0},
-      {path: '/api/v1/tests/v2', method: 0},
-      {path: '/api/v2/tests', method: 0},
-      {path: '/api/v2/tests/v2', method: 0},
+    expect(
+      Reflect.getMetadata('controller:path', TestController),
+    ).toStrictEqual(['/api/v1', '/api/v2'])
+    expect(
+      Reflect.getMetadata('controller:routes', TestController),
+    ).toStrictEqual([
+      { path: '/api/v1/tests', method: 0 },
+      { path: '/api/v1/tests/v2', method: 0 },
+      { path: '/api/v2/tests', method: 0 },
+      { path: '/api/v2/tests/v2', method: 0 },
     ])
   })
 })
