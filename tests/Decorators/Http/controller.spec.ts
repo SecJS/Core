@@ -7,7 +7,9 @@ describe('\n Controller Decorator', () => {
     @Controller()
     class TestController {}
 
-    expect(Reflect.getMetadata('controller:path', TestController)).toStrictEqual(['/'])
+    expect(
+      Reflect.getMetadata('controller:path', TestController),
+    ).toStrictEqual(['/'])
   })
 
   it('should be able to add a path to the controller', async () => {
@@ -16,6 +18,8 @@ describe('\n Controller Decorator', () => {
     @Controller(path)
     class TestController {}
 
-    expect(Reflect.getMetadata('controller:path', TestController)).toStrictEqual([path])
+    expect(
+      Reflect.getMetadata('controller:path', TestController),
+    ).toStrictEqual([path])
   })
 })

@@ -15,7 +15,7 @@
 
 The intention behind this repository is to concentrate all `SecJS` libraries to create an HTTP server to any NodeJS project.
 
-<img src=".github/core.jpg" width="200px" align="right" hspace="30px" vspace="100px">
+<img src=".github/core.png" width="200px" align="right" hspace="30px" vspace="100px">
 
 ## WARN 🛑⚠️
 
@@ -23,16 +23,17 @@ The intention behind this repository is to concentrate all `SecJS` libraries to 
 
 ## Installation
 
-This project depends on [`@secjs/utils`]('https://github.com/SecJS/Utils')
+> To use the high potential from this package you need to install first this other packages from SecJS,
+> it keeps as dev dependency because one day `@secjs/core` will install everything once.
 
 ```bash
-yarn add @secjs/utils
+npm install @secjs/utils @secjs/exceptions
 ```
 
-Then install the project
+> Then you can install the package using:
 
 ```bash
-yarn add @secjs/core
+npm install @secjs/core
 ```
 
 ## Decorators
@@ -83,7 +84,5 @@ class TestController {
 ```
 
 ---
-
-## License
 
 Made with 🖤 by [jlenon7](https://github.com/jlenon7) :wave:

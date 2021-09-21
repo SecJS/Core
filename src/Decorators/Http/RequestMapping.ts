@@ -12,23 +12,32 @@ export enum RequestMethod {
   HEAD,
 }
 
-export function RequestMapper(path: string | string[] = '/', method: RequestMethod = RequestMethod.GET): MethodDecorator {
+export function RequestMapper(
+  path: string | string[] = '/',
+  method: RequestMethod = RequestMethod.GET,
+): MethodDecorator {
   if (path.length && !path[0]) path = '/'
 
   path = pathPattern(path)
 
   return (
-    target: Object,
+    target: any,
     key: string | symbol,
     descriptor: TypedPropertyDescriptor<any>,
   ) => {
     let routes = Reflect.getMetadata('controller:routes', target.constructor)
 
     if (!routes) {
-      Reflect.defineMetadata('controller:routes', routes = [], target.constructor)
+      Reflect.defineMetadata(
+        'controller:routes',
+        (routes = []),
+        target.constructor,
+      )
     }
 
-    typeof path === 'string' ? routes.push({ path, method }) : path.forEach(p => routes.push({ path: p, method }))
+    typeof path === 'string'
+      ? routes.push({ path, method })
+      : path.forEach(p => routes.push({ path: p, method }))
 
     Reflect.defineMetadata('controller:routes', routes, target.constructor)
 
@@ -36,8 +45,10 @@ export function RequestMapper(path: string | string[] = '/', method: RequestMeth
   }
 }
 
-
-export const createRequestDecorator = (method: RequestMethod) => (path?: string | string[]): MethodDecorator => RequestMapper(path, method)
+export const createRequestDecorator =
+  (method: RequestMethod) =>
+  (path?: string | string[]): MethodDecorator =>
+    RequestMapper(path, method)
 
 export const Get = createRequestDecorator(RequestMethod.GET)
 export const Post = createRequestDecorator(RequestMethod.POST)
