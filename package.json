@@ -1,6 +1,6 @@
 {
   "name": "@secjs/core",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "license": "MIT",
   "author": "João Lenon",
   "repository": "https://github.com/SecJS/Core.git",
@@ -19,6 +19,8 @@
     "@types/node": "14.17.0",
     "@typescript-eslint/eslint-plugin": "4.31.0",
     "@typescript-eslint/parser": "4.31.0",
+    "commitizen": "4.2.4",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
@@ -52,7 +54,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   },
   "jest": {
@@ -137,9 +140,16 @@
     }
   },
   "files": [
+    "src/*.js",
+    "src/*.d.ts",
     "src/**/*.js",
     "src/**/*.d.ts",
-    "index.js",
-    "index.d.ts"
-  ]
+    "*.js",
+    "*.d.ts"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
